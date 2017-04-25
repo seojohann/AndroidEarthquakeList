@@ -66,6 +66,17 @@ public class EarthquakeListActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        gatherEarthquakeData();
+    }
+
+    private void gatherEarthquakeData() {
+
+    }
+
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
         recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(DummyContent.ITEMS));
     }
