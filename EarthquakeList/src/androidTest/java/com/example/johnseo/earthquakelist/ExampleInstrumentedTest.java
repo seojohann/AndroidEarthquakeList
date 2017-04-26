@@ -1,4 +1,4 @@
-package com.example.johnseo.myapplication;
+package com.example.johnseo.earthquakelist;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
