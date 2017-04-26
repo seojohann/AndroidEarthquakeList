@@ -1,4 +1,4 @@
-package com.example.johnseo.earthquakelist;
+package com.jseo.earthquakelist;
 
 import org.junit.Test;
 

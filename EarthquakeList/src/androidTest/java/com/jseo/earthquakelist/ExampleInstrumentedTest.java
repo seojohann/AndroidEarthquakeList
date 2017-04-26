@@ -1,4 +1,4 @@
-package com.example.johnseo.earthquakelist;
+package com.jseo.earthquakelist;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.johnseo.myapplication", appContext.getPackageName());
+        assertEquals("com.jseo.myapplication", appContext.getPackageName());
     }
 }
