@@ -1,4 +1,4 @@
-package com.jseo.earthquakelist;
+package com.jseo.earthquakelist.ui;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.gson.stream.JsonReader;
+import com.jseo.earthquakelist.R;
 import com.jseo.earthquakelist.dummy.DummyContent;
 
 import java.io.ByteArrayOutputStream;

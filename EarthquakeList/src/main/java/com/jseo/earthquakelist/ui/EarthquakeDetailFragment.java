@@ -1,4 +1,4 @@
-package com.jseo.earthquakelist;
+package com.jseo.earthquakelist.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.jseo.earthquakelist.R;
 import com.jseo.earthquakelist.dummy.DummyContent;
 
 /**

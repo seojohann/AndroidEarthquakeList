@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.jseo.earthquakelist.EarthquakeListActivity"
+            android:name="com.jseo.earthquakelist.ui.EarthquakeListActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -22,13 +22,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.jseo.earthquakelist.EarthquakeDetailActivity"
+            android:name="com.jseo.earthquakelist.ui.EarthquakeDetailActivity"
             android:label="@string/title_earthquake_detail"
-            android:parentActivityName="com.jseo.earthquakelist.EarthquakeListActivity"
+            android:parentActivityName="com.jseo.earthquakelist.ui.EarthquakeListActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.jseo.earthquakelist.EarthquakeListActivity" />
+                android:value="com.jseo.earthquakelist.ui.EarthquakeListActivity" />
         </activity>
     </application>
 

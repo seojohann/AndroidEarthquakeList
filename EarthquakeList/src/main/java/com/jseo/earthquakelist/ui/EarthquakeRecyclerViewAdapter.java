@@ -1,9 +1,11 @@
-package com.jseo.earthquakelist;
+package com.jseo.earthquakelist.ui;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.jseo.earthquakelist.R;
 
 public class EarthquakeRecyclerViewAdapter extends RecyclerView.Adapter {
 
