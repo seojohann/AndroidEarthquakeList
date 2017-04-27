@@ -9,7 +9,6 @@ import java.util.List;
 
 public class EarthquakesSummary {
 
-
     private Metadata mMetadata;
     private Bbox mBbox;
     private List<EarthquakeData> mEarthquakeList;
@@ -48,6 +47,12 @@ public class EarthquakesSummary {
         mEarthquakeList.add(earthquake);
     }
 
+    public void resetOnError() {
+        mMetadata = new Metadata();
+        mBbox = new Bbox();
+        mEarthquakeList.clear();
+    }
+
     /**
      * metadata for earthquakes summary consists of the following:
      *        generated: Long Integer,
@@ -57,7 +62,7 @@ public class EarthquakesSummary {
      *        count: Integer,
      *        status: Integer
      */
-    class Metadata {
+    public static class Metadata {
         private long mGenerated;
         private String mUrl;
         private String mTitle;
@@ -114,59 +119,59 @@ public class EarthquakesSummary {
         }
     }
 
-    class Bbox {
-        private float mMinLongitude;
-        private float mMinLatitude;
-        private float mMinDepth;
-        private float mMaxLongitude;
-        private float mMaxLatitude;
-        private float mMaxDepth;
+    public static class Bbox {
+        private double mMinLongitude;
+        private double mMinLatitude;
+        private double mMinDepth;
+        private double mMaxLongitude;
+        private double mMaxLatitude;
+        private double mMaxDepth;
 
-        public float getinLongitude() {
+        public double getMinLongitude() {
             return mMinLongitude;
         }
 
-        public void setinLongitude(float mMinLongitude) {
+        public void setMinLongitude(double mMinLongitude) {
             this.mMinLongitude = mMinLongitude;
         }
 
-        public float getinLatitude() {
+        public double getMinLatitude() {
             return mMinLatitude;
         }
 
-        public void setinLatitude(float mMinLatitude) {
+        public void setMinLatitude(double mMinLatitude) {
             this.mMinLatitude = mMinLatitude;
         }
 
-        public float getinDepth() {
+        public double getMinDepth() {
             return mMinDepth;
         }
 
-        public void setinDepth(float mMinDepth) {
+        public void setMinDepth(double mMinDepth) {
             this.mMinDepth = mMinDepth;
         }
 
-        public float getaxLongitude() {
+        public double getMaxLongitude() {
             return mMaxLongitude;
         }
 
-        public void setaxLongitude(float mMaxLongitude) {
+        public void setMaxLongitude(double mMaxLongitude) {
             this.mMaxLongitude = mMaxLongitude;
         }
 
-        public float getaxLatitude() {
+        public double getMaxLatitude() {
             return mMaxLatitude;
         }
 
-        public void setaxLatitude(float mMaxLatitude) {
+        public void setMaxLatitude(double mMaxLatitude) {
             this.mMaxLatitude = mMaxLatitude;
         }
 
-        public float getaxDepth() {
+        public double getMaxDepth() {
             return mMaxDepth;
         }
 
-        public void setaxDepth(float mMaxDepth) {
+        public void setMaxDepth(double mMaxDepth) {
             this.mMaxDepth = mMaxDepth;
         }
     }

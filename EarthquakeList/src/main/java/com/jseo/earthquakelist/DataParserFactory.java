@@ -9,8 +9,11 @@ import com.google.gson.stream.JsonReader;
 public class DataParserFactory {
 
     public static DataParser createDataParser(Object data) {
+        DataParser dataParser;
         if (data instanceof JsonReader) {
-            return new GeoJsonParser();
+            dataParser = new GeoJsonDataParser();
+            dataParser.setData(data);
+            return dataParser;
         } else {
             throw new IllegalArgumentException("Unknown data reader type.");
         }

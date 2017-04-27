@@ -7,7 +7,7 @@ public class EarthquakeData {
 
     private String mId;
     private Properties mProperties;
-    private Coordinates mCoordinates;
+    private Geometry mGeometry;
 
     public String getId() {
         return mId;
@@ -25,42 +25,42 @@ public class EarthquakeData {
         this.mProperties = mProperties;
     }
 
-    public Coordinates getCoordinates() {
-        return mCoordinates;
+    public Geometry getGeometry() {
+        return mGeometry;
     }
 
-    public void setCoordinates(Coordinates mCoordinates) {
-        this.mCoordinates = mCoordinates;
+    public void setGeometry(Geometry geometry) {
+        this.mGeometry = geometry;
     }
 
     
     
-    class Coordinates {
-        private float mLongitude;
-        private float mLatitude;
-        private float mDepth;
+    public static class Geometry {
+        private double mLongitude;
+        private double mLatitude;
+        private double mDepth;
 
-        public float getLongitude() {
+        public double getLongitude() {
             return mLongitude;
         }
 
-        public void setLongitude(float mLongitude) {
+        public void setLongitude(double mLongitude) {
             this.mLongitude = mLongitude;
         }
 
-        public float getLatitude() {
+        public double getLatitude() {
             return mLatitude;
         }
 
-        public void setLatitude(float mLatitude) {
+        public void setLatitude(double mLatitude) {
             this.mLatitude = mLatitude;
         }
 
-        public float getDepth() {
+        public double getDepth() {
             return mDepth;
         }
 
-        public void setDepth(float mDepth) {
+        public void setDepth(double mDepth) {
             this.mDepth = mDepth;
         }
     }
@@ -93,9 +93,9 @@ public class EarthquakeData {
      *        magType: String,
      *        type: String
      */
-    class Properties {
+    public static class Properties {
 
-        private float mMag;
+        private double mMag;
         private String mPlace;
         private long mTime;
         private long mUpdated;
@@ -103,8 +103,8 @@ public class EarthquakeData {
         private String mUrl;
         private String mDetail;
         private int mFelt;
-        private float mCdi;
-        private float mMmi;
+        private double mCdi;
+        private double mMmi;
         private String mAlert;
         private String mStatus;
         private int mTsunami;
@@ -115,17 +115,17 @@ public class EarthquakeData {
         private String mSources;
         private String mTypes;
         private int mNst;
-        private float mDmin;
-        private float mRms;
-        private float mGap;
+        private double mDmin;
+        private double mRms;
+        private double mGap;
         private String mMagType;
         private String mType;
 
-        public float getag() {
+        public double getMag() {
             return mMag;
         }
 
-        public void setag(float mMag) {
+        public void setMag(double mMag) {
             this.mMag = mMag;
         }
 
@@ -185,19 +185,19 @@ public class EarthquakeData {
             this.mFelt = mFelt;
         }
 
-        public float getCdi() {
+        public double getCdi() {
             return mCdi;
         }
 
-        public void setCdi(float mCdi) {
+        public void setCdi(double mCdi) {
             this.mCdi = mCdi;
         }
 
-        public float getMmi() {
+        public double getMmi() {
             return mMmi;
         }
 
-        public void setMmi(float mMmi) {
+        public void setMmi(double mMmi) {
             this.mMmi = mMmi;
         }
 
@@ -281,35 +281,35 @@ public class EarthquakeData {
             this.mNst = mNst;
         }
 
-        public float getDmin() {
+        public double getDmin() {
             return mDmin;
         }
 
-        public void setDmin(float mDmin) {
+        public void setDmin(double mDmin) {
             this.mDmin = mDmin;
         }
 
-        public float getRms() {
+        public double getRms() {
             return mRms;
         }
 
-        public void setRms(float mRms) {
+        public void setRms(double mRms) {
             this.mRms = mRms;
         }
 
-        public float getGap() {
+        public double getGap() {
             return mGap;
         }
 
-        public void setGap(float mGap) {
+        public void setGap(double mGap) {
             this.mGap = mGap;
         }
 
-        public String getagType() {
+        public String getMagType() {
             return mMagType;
         }
 
-        public void setagType(String mMagType) {
+        public void setMagType(String mMagType) {
             this.mMagType = mMagType;
         }
 

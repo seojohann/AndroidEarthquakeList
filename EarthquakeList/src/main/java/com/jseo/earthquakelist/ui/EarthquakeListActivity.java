@@ -2,32 +2,25 @@ package com.jseo.earthquakelist.ui;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.gson.stream.JsonReader;
+import com.jseo.earthquakelist.DataRetriever;
+import com.jseo.earthquakelist.EarthquakeDataRetriever;
 import com.jseo.earthquakelist.R;
 import com.jseo.earthquakelist.dummy.DummyContent;
 
-import java.io.ByteArrayOutputStream;
-import java.io.Closeable;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.List;
-
-import javax.net.ssl.HttpsURLConnection;
 
 
 /**
@@ -45,6 +38,29 @@ public class EarthquakeListActivity extends AppCompatActivity {
      * device.
      */
     private boolean mTwoPane;
+
+    private MagnitudeFilter mMagnitudeFilter = MagnitudeFilter.ALL;
+    public enum MagnitudeFilter {
+        ALL(0),
+        MAG_10(1),
+        MAG_25(2),
+        MAG_45(3),
+        SIG(4);
+
+        private int mIndex;
+
+        MagnitudeFilter(int filter) {
+            mIndex = filter;
+        }
+    }
+
+    private static int URL_RESOURCES[] = {
+            R.string.quakes_feed_all_day_url,
+            R.string.quakes_feed_mag_1_0_day_url,
+            R.string.quakes_feed_mag_2_5_day_url,
+            R.string.quakes_feed_mag_4_5_day_url,
+            R.string.quakes_feed_significant_day_url
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,59 +105,34 @@ public class EarthquakeListActivity extends AppCompatActivity {
     }
 
     private void gatherEarthquakeData() throws IOException {
-        AsyncTask<Void, Void, Void> retrieveTask = new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... voids) {
-                URLConnection connection;
-                InputStream in = null;
-                JsonReader jsonReader = null;
-                try {
-                    URL url = new URL(getString(R.string.quakes_feed_all_day_url));
-                    connection = url.openConnection();
-                    HttpsURLConnection httpsConnection = (HttpsURLConnection)connection;
 
-                    int responseCode = httpsConnection.getResponseCode();
-                    if (responseCode == HttpsURLConnection.HTTP_OK) {
-                        in = httpsConnection.getInputStream();
-                        Log.d("JSBOMB", in.toString());
-                        InputStreamReader inputStreamReader = new InputStreamReader(in, "UTF-8");
-                        jsonReader = new JsonReader(inputStreamReader);
-                        Log.d("JSBOMB", jsonReader.toString());
-
-                        final ByteArrayOutputStream bo = new ByteArrayOutputStream();
-                        byte[] buffer = new byte[1024];
-                        StringBuilder jsonBuilder = new StringBuilder();
-
-                        while (in.read(buffer) > 0) {
-                             // Read from Buffer.
-                            bo.write(buffer); // Write Into Buffer.
-                            jsonBuilder.append(bo.toString());
-                        }
-
-                        Log.d("JSBOMB", "json read ::: " + jsonBuilder.toString());
-                        Log.d("JSBOMB", bo.toString());
+        DataRetriever dataRetriever = new EarthquakeDataRetriever();
+        String urlString = getString(URL_RESOURCES[mMagnitudeFilter.mIndex]);
+        try {
+            URL url = new URL(urlString);
+            dataRetriever.setUrlString(urlString);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            Toast.makeText(this, "invalid URL set", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        DataRetriever.OnRetrieveCompleteListener onRetrieveCompleteListener =
+                new DataRetriever.OnRetrieveCompleteListener() {
+                    @Override
+                    public void onRetrieveComplete(boolean isSuccess, Object retrievedData) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                //TODO use retrievedData to update list
+                                Toast.makeText(getApplicationContext(), "retrieve completed", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                } finally {
-                    closeCloseable(in);
-                    closeCloseable(jsonReader);
-                }
-                return null;
-            }
+                };
+        dataRetriever.setOnRetrieveCompleteListener(onRetrieveCompleteListener);
 
-            private void closeCloseable(Closeable closeable) {
-                try {
-                    if (closeable != null) {
-                        closeable.close();
-                    }
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
-                }
-            }
-        };
+        dataRetriever.retrieve();
 
-        retrieveTask.execute();
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {

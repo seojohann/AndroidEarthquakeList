@@ -4,20 +4,23 @@ public abstract class DataRetriever {
 
     private DataParser mParser;
     private OnRetrieveCompleteListener mOnCompleteListener;
+    private String mUrlString;
 
 
-    interface OnRetrieveCompleteListener {
-        void onRetrieveComplete();
+    public interface OnRetrieveCompleteListener {
+        void onRetrieveComplete(boolean isSuccess, Object retrievedData);
     }
 
     public DataRetriever() {
         mParser = null;
         mOnCompleteListener = null;
+        mUrlString = null;
     }
 
-    public DataRetriever(DataParser parser, OnRetrieveCompleteListener listener) {
-        mParser = parser;
+    public DataRetriever(OnRetrieveCompleteListener listener) {
+        mParser = null;
         mOnCompleteListener = listener;
+        mUrlString = null;
     }
 
     public void setOnRetrieveCompleteListener(OnRetrieveCompleteListener listener) {
@@ -28,13 +31,36 @@ public abstract class DataRetriever {
         return mOnCompleteListener;
     }
 
-    public void setDataParser(DataParser parser) {
-        mParser = parser;
+    public void setUrlString(String urlString) {
+        mUrlString = urlString;
     }
 
-    abstract void retrieve();
+    public String getUrlString() {
+        return mUrlString;
+    }
 
-    void parseData() {
-        mParser.parse();
+    public void setDataParser(Object data) {
+        mParser = DataParserFactory.createDataParser(data);
+        mParser.setOnParseCompleteListener(new DataParser.OnParseCompleteListener() {
+            @Override
+            public void onParseComplete(boolean isSuccess, Object parsedData) {
+                if (mOnCompleteListener != null) {
+                    mOnCompleteListener.onRetrieveComplete(isSuccess, parsedData);
+                }
+            }
+        });
+    }
+
+    /**
+     * derived Retriever should implement how to retrieve data
+     */
+    public abstract void retrieve();
+
+    void parseData() throws Exception {
+        if (mParser != null) {
+            mParser.parse();
+        } else {
+            throw new Exception("Parser is not set!");
+        }
     }
 }

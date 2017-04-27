@@ -2,6 +2,11 @@
     <string name="app_name">Earthquakes List</string>
     <string name="title_earthquake_detail">Earthquake Detail</string>
 
+    <string name="no_earthquakes">No earthquakes</string>
+
+    <!--to view just a few earthquakes as testing code -->
+    <string name="quakes_feed_significant_week_url" translatable="false">https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_week.geojson</string>
+
     <string name="quakes_feed_all_day_url" translatable="false">https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson</string>
     <string name="quakes_feed_mag_1.0_day_url" translatable="false">https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/1.0_day.geojson</string>
     <string name="quakes_feed_mag_2.5_day_url" translatable="false">https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_day.geojson</string>
