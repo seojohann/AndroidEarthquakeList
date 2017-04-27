@@ -16,11 +16,14 @@ import android.widget.Toast;
 import com.jseo.earthquakelist.DataRetriever;
 import com.jseo.earthquakelist.EarthquakeDataRetriever;
 import com.jseo.earthquakelist.R;
+import com.jseo.earthquakelist.data.EarthquakeData;
 import com.jseo.earthquakelist.data.EarthquakesSummary;
-import com.jseo.earthquakelist.dummy.DummyContent;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -41,7 +44,7 @@ public class EarthquakeListActivity extends AppCompatActivity {
     private boolean mTwoPane;
     private EarthquakeRecyclerViewAdapter mAdapter;
 
-    private MagnitudeFilter mMagnitudeFilter = MagnitudeFilter.MAG_45;
+    private MagnitudeFilter mMagnitudeFilter = MagnitudeFilter.ALL;
     public enum MagnitudeFilter {
         ALL(0),
         MAG_10(1),
@@ -73,15 +76,6 @@ public class EarthquakeListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-
         View recyclerView = findViewById(R.id.earthquake_list);
         assert recyclerView != null;
         setupRecyclerView((RecyclerView) recyclerView);
@@ -99,14 +93,14 @@ public class EarthquakeListActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        try {
-            gatherEarthquakeData();
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
-        }
+        gatherEarthquakeData();
     }
 
-    private void gatherEarthquakeData() throws IOException {
+    /**
+     * connect to USGS and retrieve earthquake data. it would be a good idea to prevent connecting
+     * on every onResume(), but will consider that in the future
+     */
+    private void gatherEarthquakeData() {
 
         DataRetriever dataRetriever = new EarthquakeDataRetriever();
         String urlString = getString(URL_RESOURCES[mMagnitudeFilter.mIndex]);
@@ -118,6 +112,7 @@ public class EarthquakeListActivity extends AppCompatActivity {
             Toast.makeText(this, "invalid URL set", Toast.LENGTH_SHORT).show();
             return;
         }
+
         DataRetriever.OnRetrieveCompleteListener onRetrieveCompleteListener =
                 new DataRetriever.OnRetrieveCompleteListener() {
                     @Override
@@ -126,15 +121,21 @@ public class EarthquakeListActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 //TODO use retrievedData to update list
-                                if (isSuccess && retrievedData instanceof EarthquakesSummary) {
+                                if (isSuccess &&
+                                        retrievedData != null &&
+                                        retrievedData instanceof EarthquakesSummary) {
                                     EarthquakesSummary earthquakesSummary =
                                             (EarthquakesSummary)retrievedData;
-                                    mAdapter.setEarthquakeData(earthquakesSummary.getEarthquakeList());
-                                    mAdapter.notifyDataSetChanged();
+                                    List<EarthquakeData> earthquakeDataList =
+                                            earthquakesSummary.getEarthquakeList();
+                                    if (earthquakeDataList.isEmpty()) {
+                                        displayEmptyList();
+                                    } else {
+                                        displayUpdatedData(earthquakeDataList);
+                                    }
+                                } else {
+                                    displayEmptyList();
                                 }
-                                Toast.makeText(getApplicationContext(),
-                                        "retrieve completed - is success? " + isSuccess,
-                                        Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -145,40 +146,101 @@ public class EarthquakeListActivity extends AppCompatActivity {
 
     }
 
-    private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        mAdapter = new EarthquakeRecyclerViewAdapter();
-        recyclerView.setAdapter(mAdapter);
-//        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(DummyContent.ITEMS));
+    private void displayUpdatedData(List<EarthquakeData> updatedData) {
+        mAdapter.setEarthquakeData(updatedData);
+        mAdapter.notifyDataSetChanged();
+        findViewById(R.id.earthquake_list).setVisibility(View.VISIBLE);
+        findViewById(R.id.list_empty).setVisibility(View.GONE);
     }
 
-    public class SimpleItemRecyclerViewAdapter
-            extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
+    private void displayEmptyList() {
+        mAdapter.setEarthquakeData(new ArrayList<EarthquakeData>());
+        mAdapter.notifyDataSetChanged();
+        findViewById(R.id.earthquake_list).setVisibility(View.GONE);
+        findViewById(R.id.list_empty).setVisibility(View.VISIBLE);
+    }
 
-        private final List<DummyContent.DummyItem> mValues;
 
-        public SimpleItemRecyclerViewAdapter(List<DummyContent.DummyItem> items) {
-            mValues = items;
+    private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
+        mAdapter = new EarthquakeRecyclerViewAdapter(this);
+        recyclerView.setAdapter(mAdapter);
+    }
+
+
+    public class EarthquakeRecyclerViewAdapter extends
+            RecyclerView.Adapter<EarthquakeRecyclerViewAdapter.EarthquakeItemViewHolder> {
+
+        private Context mContext;
+
+        public EarthquakeRecyclerViewAdapter(Context context) {
+            super();
+            mContext = context;
+        }
+
+        public class EarthquakeItemViewHolder extends RecyclerView.ViewHolder {
+            private final View mView;
+            private final TextView mTime;
+            private final TextView mPlace;
+            private final TextView mMag;
+            //EarthquakeData mData;
+
+            public EarthquakeItemViewHolder(View view) {
+                super(view);
+                mView = view;
+                mTime = (TextView)view.findViewById(R.id.time);
+                mPlace = (TextView)view.findViewById(R.id.place);
+                mMag = (TextView)view.findViewById(R.id.magnitude);
+            }
+
+            @Override
+            public String toString() {
+                return super.toString() + " '" + mTime.getText() + " " + mPlace.getText()
+                        + " " + mMag.getText() + "'";
+            }
+        }
+
+        List<EarthquakeData> mData = null;
+
+        private void setEarthquakeData(List<EarthquakeData> data) {
+            mData = data;
         }
 
         @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public EarthquakeItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.earthquake_list_content, parent, false);
-            return new ViewHolder(view);
+                    .inflate(R.layout.earthquake_list_item, parent, false);
+            return new EarthquakeItemViewHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(final ViewHolder holder, int position) {
-            holder.mItem = mValues.get(position);
-            holder.mIdView.setText(mValues.get(position).id);
-            holder.mContentView.setText(mValues.get(position).content);
+        public void onBindViewHolder(EarthquakeItemViewHolder holder, int position) {
+            final EarthquakeData earthquakeData = mData.get(position);
+            final EarthquakeData.Properties earthquakeProperties = earthquakeData.getProperties();
+            long timeLong = earthquakeProperties.getTime();
+            holder.mTime.setText(convertTime(timeLong));
+            holder.mPlace.setText(earthquakeProperties.getPlace());
+            double mag = earthquakeProperties.getMag();
+            holder.mMag.setText(mContext.getString(R.string.format_magnitude, mag));
+
 
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Bundle arguments = new Bundle();
+                    arguments.putLong(EarthquakeDetailFragment.ARG_ITEM_TIME,
+                            earthquakeProperties.getTime());
+                    arguments.putString(EarthquakeDetailFragment.ARG_ITEM_PLACE,
+                            earthquakeProperties.getPlace());
+                    arguments.putDouble(EarthquakeDetailFragment.ARG_ITEM_MAG,
+                            earthquakeProperties.getMag());
+                    arguments.putDouble(EarthquakeDetailFragment.ARG_ITEM_LONGI,
+                            earthquakeData.getGeometry().getLongitude());
+                    arguments.putDouble(EarthquakeDetailFragment.ARG_ITEM_LATTI,
+                            earthquakeData.getGeometry().getLatitude());
+                    arguments.putInt(EarthquakeDetailFragment.ARG_ITEM_TSUNAMI,
+                            earthquakeProperties.getTsunami());
+
                     if (mTwoPane) {
-                        Bundle arguments = new Bundle();
-                        arguments.putString(EarthquakeDetailFragment.ARG_ITEM_ID, holder.mItem.id);
                         EarthquakeDetailFragment fragment = new EarthquakeDetailFragment();
                         fragment.setArguments(arguments);
                         getSupportFragmentManager().beginTransaction()
@@ -187,7 +249,7 @@ public class EarthquakeListActivity extends AppCompatActivity {
                     } else {
                         Context context = v.getContext();
                         Intent intent = new Intent(context, EarthquakeDetailActivity.class);
-                        intent.putExtra(EarthquakeDetailFragment.ARG_ITEM_ID, holder.mItem.id);
+                        intent.putExtra("args", arguments);
 
                         context.startActivity(intent);
                     }
@@ -197,26 +259,19 @@ public class EarthquakeListActivity extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
-            return mValues.size();
+            if (mData == null) {
+                return 0;
+            }
+            return mData.size();
         }
 
-        public class ViewHolder extends RecyclerView.ViewHolder {
-            public final View mView;
-            public final TextView mIdView;
-            public final TextView mContentView;
-            public DummyContent.DummyItem mItem;
+        private String convertTime(long time) {
+            Date date = new Date(time);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("h:mm:ss a");
 
-            public ViewHolder(View view) {
-                super(view);
-                mView = view;
-                mIdView = (TextView) view.findViewById(R.id.id);
-                mContentView = (TextView) view.findViewById(R.id.content);
-            }
+            String convertedTime = simpleDateFormat.format(date);
 
-            @Override
-            public String toString() {
-                return super.toString() + " '" + mContentView.getText() + "'";
-            }
+            return convertedTime;
         }
     }
 }

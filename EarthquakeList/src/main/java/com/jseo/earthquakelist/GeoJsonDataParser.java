@@ -6,6 +6,9 @@ import com.jseo.earthquakelist.data.EarthquakeData;
 import com.jseo.earthquakelist.data.EarthquakesSummary;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * Created by seojohann on 4/26/17.
@@ -175,6 +178,25 @@ class GeoJsonDataParser extends DataParser {
         while (jsonReader.hasNext()) {
             mEarthquakesSummary.addEarthquakeData(parseEarthquake(jsonReader));
         }
+
+//        List<EarthquakeData> earthquakeDataList = mEarthquakesSummary.getEarthquakeList();
+//        Collections.sort(earthquakeDataList, new Comparator<EarthquakeData>() {
+//            @Override
+//            public int compare(EarthquakeData earthquake1, EarthquakeData earthquake2) {
+//                long time1 = earthquake1.getProperties().getTime();
+//                long time2 = earthquake2.getProperties().getTime();
+//
+//                long diff = time2 - time1;
+//
+//                if (diff > 0) {
+//                    return 1;
+//                } else if (diff < 0) {
+//                    return -1;
+//                }
+//
+//                return 0;
+//            }
+//        });
 
         jsonReader.endArray();
     }

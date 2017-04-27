@@ -2,13 +2,20 @@
     <string name="app_name">Earthquakes List</string>
     <string name="title_earthquake_detail">Earthquake Detail</string>
 
-    <string name="no_earthquakes">No earthquakes</string>
+    <string name="no_earthquakes">No earthquakes recorded</string>
 
-    <string name="format_magnitude">%f Magnitude</string>
+    <string name="format_time" translatable="false">hh:mm:ss AP</string>
+    <string name="format_magnitude">%.1f Magnitude</string>
+    <string name="format_coordinates" translatable="false">%1$.3f, %2$.3f</string>
 
+    <string name="label_time">Time:</string>
+    <string name="label_place">Place:</string>
+    <string name="label_magnitude">Magnitude:</string>
+    <string name="label_coordinates">Longitude &amp; Latitude:</string>
+    <string name="label_tsunami">Tsunami potential:</string>
 
-    <!--to view just a few earthquakes as testing code -->
-    <string name="quakes_feed_significant_week_url" translatable="false">https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_week.geojson</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
     <string name="quakes_feed_all_day_url" translatable="false">https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson</string>
     <string name="quakes_feed_mag_1.0_day_url" translatable="false">https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/1.0_day.geojson</string>
