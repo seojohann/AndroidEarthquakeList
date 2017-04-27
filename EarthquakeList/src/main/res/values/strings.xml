@@ -4,6 +4,9 @@
 
     <string name="no_earthquakes">No earthquakes</string>
 
+    <string name="format_magnitude">%f Magnitude</string>
+
+
     <!--to view just a few earthquakes as testing code -->
     <string name="quakes_feed_significant_week_url" translatable="false">https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_week.geojson</string>
 

@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.jseo.earthquakelist.DataRetriever;
 import com.jseo.earthquakelist.EarthquakeDataRetriever;
 import com.jseo.earthquakelist.R;
+import com.jseo.earthquakelist.data.EarthquakesSummary;
 import com.jseo.earthquakelist.dummy.DummyContent;
 
 import java.io.IOException;
@@ -38,8 +39,9 @@ public class EarthquakeListActivity extends AppCompatActivity {
      * device.
      */
     private boolean mTwoPane;
+    private EarthquakeRecyclerViewAdapter mAdapter;
 
-    private MagnitudeFilter mMagnitudeFilter = MagnitudeFilter.ALL;
+    private MagnitudeFilter mMagnitudeFilter = MagnitudeFilter.MAG_45;
     public enum MagnitudeFilter {
         ALL(0),
         MAG_10(1),
@@ -119,12 +121,20 @@ public class EarthquakeListActivity extends AppCompatActivity {
         DataRetriever.OnRetrieveCompleteListener onRetrieveCompleteListener =
                 new DataRetriever.OnRetrieveCompleteListener() {
                     @Override
-                    public void onRetrieveComplete(boolean isSuccess, Object retrievedData) {
+                    public void onRetrieveComplete(final boolean isSuccess, final Object retrievedData) {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 //TODO use retrievedData to update list
-                                Toast.makeText(getApplicationContext(), "retrieve completed", Toast.LENGTH_SHORT).show();
+                                if (isSuccess && retrievedData instanceof EarthquakesSummary) {
+                                    EarthquakesSummary earthquakesSummary =
+                                            (EarthquakesSummary)retrievedData;
+                                    mAdapter.setEarthquakeData(earthquakesSummary.getEarthquakeList());
+                                    mAdapter.notifyDataSetChanged();
+                                }
+                                Toast.makeText(getApplicationContext(),
+                                        "retrieve completed - is success? " + isSuccess,
+                                        Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -136,7 +146,9 @@ public class EarthquakeListActivity extends AppCompatActivity {
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(DummyContent.ITEMS));
+        mAdapter = new EarthquakeRecyclerViewAdapter();
+        recyclerView.setAdapter(mAdapter);
+//        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(DummyContent.ITEMS));
     }
 
     public class SimpleItemRecyclerViewAdapter

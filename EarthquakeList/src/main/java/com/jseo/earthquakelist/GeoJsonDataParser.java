@@ -1,6 +1,7 @@
 package com.jseo.earthquakelist;
 
 import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
 import com.jseo.earthquakelist.data.EarthquakeData;
 import com.jseo.earthquakelist.data.EarthquakesSummary;
 
@@ -214,6 +215,10 @@ class GeoJsonDataParser extends DataParser {
         jsonReader.beginObject();
         while (jsonReader.hasNext()) {
             String name = jsonReader.nextName();
+            if (jsonReader.peek() == JsonToken.NULL) {
+                jsonReader.skipValue();
+                continue;
+            }
             switch (name) {
                 case PROPERTIES_MAG:
                     properties.setMag(jsonReader.nextDouble());

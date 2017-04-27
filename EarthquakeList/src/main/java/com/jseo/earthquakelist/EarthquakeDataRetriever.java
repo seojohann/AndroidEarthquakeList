@@ -42,21 +42,6 @@ public class EarthquakeDataRetriever extends DataRetriever {
                         setDataParser(jsonReader);
                         parseData();
 
-
-                        final ByteArrayOutputStream bo = new ByteArrayOutputStream();
-                        byte[] buffer = new byte[1024];
-                        StringBuilder jsonBuilder = new StringBuilder();
-
-                        while (in.read(buffer) > 0) {
-                            // Read from Buffer.
-                            bo.write(buffer); // Write Into Buffer.
-                            jsonBuilder.append(bo.toString());
-                        }
-
-                        Log.d("JSBOMB", "json read ::: " + jsonBuilder.toString());
-                        Log.d("JSBOMB", bo.toString());
-
-                        getOnRetrieveCompleteListener().onRetrieveComplete(true, null);
                     }
                 } catch (Exception ex) {
                     ex.printStackTrace();
