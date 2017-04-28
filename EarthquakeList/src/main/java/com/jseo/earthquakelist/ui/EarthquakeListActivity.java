@@ -198,6 +198,10 @@ public class EarthquakeListActivity extends AppCompatActivity {
         mAdapter.setEarthquakeData(updatedData);
         mAdapter.notifyDataSetChanged();
         findViewById(R.id.earthquake_list).setVisibility(View.VISIBLE);
+        View detailContainer = findViewById(R.id.earthquake_detail_container);
+        if (detailContainer != null) {
+            detailContainer.setVisibility(View.GONE);
+        }
         findViewById(R.id.list_empty_text).setVisibility(View.GONE);
         findViewById(R.id.retrieval_failed_layout).setVisibility(View.GONE);
 
@@ -209,6 +213,10 @@ public class EarthquakeListActivity extends AppCompatActivity {
         mAdapter.setEarthquakeData(new ArrayList<EarthquakeData>());
         mAdapter.notifyDataSetChanged();
         findViewById(R.id.earthquake_list).setVisibility(View.GONE);
+        View detailContainer = findViewById(R.id.earthquake_detail_container);
+        if (detailContainer != null) {
+            detailContainer.setVisibility(View.GONE);
+        }
         findViewById(R.id.list_empty_text).setVisibility(View.VISIBLE);
         findViewById(R.id.retrieval_failed_layout).setVisibility(View.GONE);
 
@@ -220,6 +228,10 @@ public class EarthquakeListActivity extends AppCompatActivity {
         mAdapter.setEarthquakeData(new ArrayList<EarthquakeData>());
         mAdapter.notifyDataSetChanged();
         findViewById(R.id.earthquake_list).setVisibility(View.GONE);
+        View detailContainer = findViewById(R.id.earthquake_detail_container);
+        if (detailContainer != null) {
+            detailContainer.setVisibility(View.GONE);
+        }
         findViewById(R.id.list_empty_text).setVisibility(View.GONE);
         findViewById(R.id.retrieval_failed_layout).setVisibility(View.VISIBLE);
         findViewById(R.id.retry_button).setOnClickListener(new View.OnClickListener() {
@@ -313,6 +325,10 @@ public class EarthquakeListActivity extends AppCompatActivity {
                             earthquakeProperties.getTsunami());
 
                     if (mTwoPane) {
+                        View detailContainer = findViewById(R.id.earthquake_detail_container);
+                        if (detailContainer != null) {
+                            detailContainer.setVisibility(View.VISIBLE);
+                        }
                         EarthquakeDetailFragment fragment = new EarthquakeDetailFragment();
                         fragment.setArguments(arguments);
                         getSupportFragmentManager().beginTransaction()

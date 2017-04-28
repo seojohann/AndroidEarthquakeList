@@ -27,7 +27,7 @@
         android:layout_marginRight="16dp"
         app:layoutManager="LinearLayoutManager"
         tools:context="com.jseo.earthquakelist.ui.EarthquakeListActivity"
-        tools:listitem="@layout/earthquake_list_content" />
+        tools:listitem="@layout/earthquake_list_item" />
 
     <FrameLayout
         android:id="@+id/earthquake_detail_container"
