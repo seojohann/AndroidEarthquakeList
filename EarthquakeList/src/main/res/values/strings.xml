@@ -2,10 +2,16 @@
     <string name="app_name">Earthquakes List</string>
     <string name="title_earthquake_detail">Earthquake Detail</string>
 
+    <string name="list_subtitle_all">All magnitudes</string>
+    <string name="list_subtitle_significant">Significant magnitudes</string>
+    <string name="list_subtitle_m10">M1.0+</string>
+    <string name="list_subtitle_m25">M2.5+</string>
+    <string name="list_subtitle_m45">M4.5+</string>
+
     <string name="no_earthquakes">No earthquakes recorded</string>
 
     <string name="format_time" translatable="false">hh:mm:ss AP</string>
-    <string name="format_magnitude">%.1f Magnitude</string>
+    <string name="format_magnitude">M%.1f</string>
     <string name="format_coordinates" translatable="false">%1$.3f, %2$.3f</string>
 
     <string name="label_time">Time:</string>
@@ -22,4 +28,15 @@
     <string name="quakes_feed_mag_2.5_day_url" translatable="false">https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_day.geojson</string>
     <string name="quakes_feed_mag_4.5_day_url" translatable="false">https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson</string>
     <string name="quakes_feed_significant_day_url" translatable="false">https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_day.geojson</string>
+
+    <string name="main_menu_filter">Filter</string>
+    <string name="select_dialog_title">Filter by Magnitude</string>
+    <string-array name="magnitude_items">
+        <item name="all">All</item>
+        <item name="1.0">M1.0+</item>
+        <item name="2.5">M2.5+</item>
+        <item name="4.5">M4.5+</item>
+        <item name="sig">Significant</item>
+    </string-array>
+
 </resources>

@@ -1,5 +1,8 @@
-package com.jseo.earthquakelist;
+package com.jseo.earthquakelist.data;
 
+/**
+ * connect and retrieve data. after data is retrieved it should be parsed by appropriate parser
+ */
 public abstract class DataRetriever {
 
     private DataParser mParser;
@@ -8,6 +11,10 @@ public abstract class DataRetriever {
 
 
     public interface OnRetrieveCompleteListener {
+        /**
+         * callback to be called after retrieval (and parsing) is complete. make sure to update UI
+         * in the main thread
+         */
         void onRetrieveComplete(boolean isSuccess, Object retrievedData);
     }
 

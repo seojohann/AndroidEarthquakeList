@@ -1,25 +1,32 @@
 package com.jseo.earthquakelist.ui;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.jseo.earthquakelist.DataRetriever;
-import com.jseo.earthquakelist.EarthquakeDataRetriever;
+import com.jseo.earthquakelist.data.DataRetriever;
+import com.jseo.earthquakelist.data.EarthquakeDataRetriever;
 import com.jseo.earthquakelist.R;
 import com.jseo.earthquakelist.data.EarthquakeData;
 import com.jseo.earthquakelist.data.EarthquakesSummary;
 
-import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -59,12 +66,20 @@ public class EarthquakeListActivity extends AppCompatActivity {
         }
     }
 
-    private static int URL_RESOURCES[] = {
+    private static final int URL_RESOURCES[] = {
             R.string.quakes_feed_all_day_url,
             R.string.quakes_feed_mag_1_0_day_url,
             R.string.quakes_feed_mag_2_5_day_url,
             R.string.quakes_feed_mag_4_5_day_url,
             R.string.quakes_feed_significant_day_url
+    };
+
+    private static final int SUBTITLE_RESOURCES[] = {
+            R.string.list_subtitle_all,
+            R.string.list_subtitle_m10,
+            R.string.list_subtitle_m25,
+            R.string.list_subtitle_m45,
+            R.string.list_subtitle_significant
     };
 
     @Override
@@ -90,10 +105,42 @@ public class EarthquakeListActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onStart() {
+        super.onStart();
 
         gatherEarthquakeData();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.main_menu, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+
+        switch (itemId) {
+            case R.id.main_menu_filter:
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                SelectMagnitudeDialog selectMagnitudeDialog = new SelectMagnitudeDialog();
+                selectMagnitudeDialog.setFilterSelectedListener(new FilterSelectedListener() {
+                    @Override
+                    public void onFilterSelected(int which) {
+                        mMagnitudeFilter.mIndex = which;
+                        gatherEarthquakeData();
+                    }
+                });
+                selectMagnitudeDialog.show(fragmentManager, "select");
+                return true;
+            default:
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -151,6 +198,9 @@ public class EarthquakeListActivity extends AppCompatActivity {
         mAdapter.notifyDataSetChanged();
         findViewById(R.id.earthquake_list).setVisibility(View.VISIBLE);
         findViewById(R.id.list_empty).setVisibility(View.GONE);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setSubtitle(SUBTITLE_RESOURCES[mMagnitudeFilter.mIndex]);
     }
 
     private void displayEmptyList() {
@@ -158,6 +208,9 @@ public class EarthquakeListActivity extends AppCompatActivity {
         mAdapter.notifyDataSetChanged();
         findViewById(R.id.earthquake_list).setVisibility(View.GONE);
         findViewById(R.id.list_empty).setVisibility(View.VISIBLE);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setSubtitle(SUBTITLE_RESOURCES[mMagnitudeFilter.mIndex]);
     }
 
 
@@ -272,6 +325,35 @@ public class EarthquakeListActivity extends AppCompatActivity {
             String convertedTime = simpleDateFormat.format(date);
 
             return convertedTime;
+        }
+    }
+
+    interface FilterSelectedListener {
+        void onFilterSelected(int which);
+    }
+
+    public static class SelectMagnitudeDialog extends DialogFragment {
+        FilterSelectedListener mListener;
+
+        void setFilterSelectedListener(FilterSelectedListener listener) {
+            mListener = listener;
+        }
+
+        @NonNull
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
+            dialogBuilder.setTitle(R.string.select_dialog_title);
+            dialogBuilder.setItems(R.array.magnitude_items, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int which) {
+                    if (mListener != null) {
+                        mListener.onFilterSelected(which);
+                    }
+                }
+            });
+
+            return dialogBuilder.create();
         }
     }
 }

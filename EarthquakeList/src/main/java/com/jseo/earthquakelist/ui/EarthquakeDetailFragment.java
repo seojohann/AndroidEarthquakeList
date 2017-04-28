@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.jseo.earthquakelist.R;
-import com.jseo.earthquakelist.dummy.DummyContent;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -34,10 +33,6 @@ public class EarthquakeDetailFragment extends Fragment {
     public static final String ARG_ITEM_LATTI = "item_latti";
     public static final String ARG_ITEM_TSUNAMI = "item_tsunami";
 
-    /**
-     * The dummy content this fragment is presenting.
-     */
-    private DummyContent.DummyItem mItem;
     private EarthquakeDetail mEarthquake;
 
     private class EarthquakeDetail {
@@ -64,20 +59,13 @@ public class EarthquakeDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         Bundle arguments = getArguments();
-        if (arguments.containsKey(ARG_ITEM_ID)) {
-            // Load the dummy content specified by the fragment
-            // arguments. In a real-world scenario, use a Loader
-            // to load content from a content provider.
-            mItem = DummyContent.ITEM_MAP.get(arguments.getString(ARG_ITEM_ID));
-        } else {
-            mEarthquake = new EarthquakeDetail();
-            mEarthquake.mTime = arguments.getLong(ARG_ITEM_TIME);
-            mEarthquake.mPlace = arguments.getString(ARG_ITEM_PLACE);
-            mEarthquake.mMag = arguments.getDouble(ARG_ITEM_MAG);
-            mEarthquake.mLongitude = arguments.getDouble(ARG_ITEM_LONGI);
-            mEarthquake.mLattitude = arguments.getDouble(ARG_ITEM_LATTI);
-            mEarthquake.mTsunami = arguments.getInt(ARG_ITEM_TSUNAMI);
-        }
+        mEarthquake = new EarthquakeDetail();
+        mEarthquake.mTime = arguments.getLong(ARG_ITEM_TIME);
+        mEarthquake.mPlace = arguments.getString(ARG_ITEM_PLACE);
+        mEarthquake.mMag = arguments.getDouble(ARG_ITEM_MAG);
+        mEarthquake.mLongitude = arguments.getDouble(ARG_ITEM_LONGI);
+        mEarthquake.mLattitude = arguments.getDouble(ARG_ITEM_LATTI);
+        mEarthquake.mTsunami = arguments.getInt(ARG_ITEM_TSUNAMI);
 
         Activity activity = this.getActivity();
         CollapsingToolbarLayout appBarLayout =

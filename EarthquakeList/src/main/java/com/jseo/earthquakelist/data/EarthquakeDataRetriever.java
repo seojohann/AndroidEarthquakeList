@@ -1,10 +1,7 @@
-package com.jseo.earthquakelist;
-
-import android.util.Log;
+package com.jseo.earthquakelist.data;
 
 import com.google.gson.stream.JsonReader;
 
-import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,11 +11,16 @@ import java.net.URLConnection;
 
 import javax.net.ssl.HttpsURLConnection;
 
+/**
+ * USGS uses Https, hence use HttpsURLConnection to retrieve earthquake data
+ */
 public class EarthquakeDataRetriever extends DataRetriever {
 
     @Override
     public void retrieve() {
 
+        //retrieval is done in the background since this can take long and we don't want ANR while
+        //waiting
         Thread retrieverThread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -33,10 +35,8 @@ public class EarthquakeDataRetriever extends DataRetriever {
                     int responseCode = httpsConnection.getResponseCode();
                     if (responseCode == HttpsURLConnection.HTTP_OK) {
                         in = httpsConnection.getInputStream();
-                        Log.d("JSBOMB", in.toString());
                         InputStreamReader inputStreamReader = new InputStreamReader(in, "UTF-8");
                         jsonReader = new JsonReader(inputStreamReader);
-                        Log.d("JSBOMB", jsonReader.toString());
 
                         //start parsing
                         setDataParser(jsonReader);

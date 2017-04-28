@@ -1,9 +1,8 @@
-package com.jseo.earthquakelist;
+package com.jseo.earthquakelist.data;
 
 /**
- * Created by seojohann on 4/26/17.
+ * parses and returns usable data
  */
-
 public abstract class DataParser {
 
     private OnParseCompleteListener mOnCompleteListener;

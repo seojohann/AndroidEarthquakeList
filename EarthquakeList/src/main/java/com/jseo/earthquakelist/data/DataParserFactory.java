@@ -1,11 +1,11 @@
-package com.jseo.earthquakelist;
+package com.jseo.earthquakelist.data;
 
 import com.google.gson.stream.JsonReader;
 
 /**
- * Created by seojohann on 4/26/17.
+ * decide on which datatype parser to create instance of and return. for now we only have json
+ * as provided on the USGS site. this possibly leaves a room for extension
  */
-
 public class DataParserFactory {
 
     public static DataParser createDataParser(Object data) {
