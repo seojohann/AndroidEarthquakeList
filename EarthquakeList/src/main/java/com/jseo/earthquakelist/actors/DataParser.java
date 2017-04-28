@@ -1,4 +1,4 @@
-package com.jseo.earthquakelist.data;
+package com.jseo.earthquakelist.actors;
 
 /**
  * parses and returns usable data

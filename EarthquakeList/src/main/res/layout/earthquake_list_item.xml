@@ -10,21 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"
         android:textAppearance="?attr/textAppearanceListItem"
-        android:text="@string/format_time"
-        android:layout_centerVertical="true"/>
-
-    <TextView
-        android:id="@+id/place"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?attr/textAppearanceListItem"
-        android:text="@string/quakes_feed_significant_day_url"
-        android:layout_margin="@dimen/text_margin"
-        android:layout_toLeftOf="@+id/magnitude"
-        android:layout_toStartOf="@+id/magnitude"
-        android:layout_toRightOf="@+id/time"
-        android:layout_toEndOf="@+id/time"
-        android:layout_centerVertical="true"/>
+        android:text="@string/format_time"/>
 
     <TextView
         android:id="@+id/magnitude"
@@ -33,9 +19,26 @@
         android:layout_margin="@dimen/text_margin"
         android:textAppearance="?attr/textAppearanceListItem"
         android:text="@string/format_magnitude"
-        android:layout_alignBaseline="@+id/time"
-        android:layout_alignBottom="@+id/time"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"/>
+        android:layout_toRightOf="@+id/time"
+        android:layout_toEndOf="@+id/time"/>
+
+    <TextView
+        android:id="@+id/place"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:text="@string/quakes_feed_significant_day_url"
+        android:layout_below="@+id/time"
+        android:layout_alignLeft="@+id/time"
+        android:layout_alignStart="@+id/time" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        android:layout_marginTop="@dimen/text_margin"
+        android:layout_marginLeft="@dimen/text_margin"
+        android:layout_marginRight="@dimen/text_margin"
+        android:layout_below="@+id/place"/>
+
 </RelativeLayout>

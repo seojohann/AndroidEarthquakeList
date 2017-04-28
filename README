@@ -1,0 +1,19 @@
+EarthquakeList is an Android app that displays list of earthquakes that occurred during the last 24
+hours.
+
+This app consists of two activities: First activity is a list of earthquakes that occurred,
+displaying three minimal information, time, magnitude, and place, of each earthquake. Clicking the
+earthquake from the list will launch the second activity, which displays more detailed information
+of clicked earthquake. Detail activity displays time, place, magnitude, longitude & latitude, and
+potential tsunami.
+
+The list is composed from the feed data on USGS site, and this is done by the app's two components,
+retriever and parser. Data retriever connects with URLConnection and pulls json data from USGS,
+then this json data is passed on to the parser, which reads and stores earthquakes to data type
+class, EarthquakesSummary, and returns it to list activity for it to display.
+
+The earthquake list is ordered with the most recent incidents on top, as data on USGS site is
+provided in that order. User can also set the filter on the list, select on from all, M1.0+, M2.5+,
+M4.5, and significant, and only the earthquakes that fall under selected filter will be listed. This
+is done simply by changing the url to pre-filtered URL and have the retriever get the filtered data
+from USGS.

@@ -9,6 +9,8 @@
     <string name="list_subtitle_m45">M4.5+</string>
 
     <string name="no_earthquakes">No earthquakes recorded</string>
+    <string name="retrieval_failed">Failed to retrieve earthquakes</string>
+    <string name="retry">Retry</string>
 
     <string name="format_time" translatable="false">hh:mm:ss AP</string>
     <string name="format_magnitude">M%.1f</string>
@@ -18,7 +20,7 @@
     <string name="label_place">Place:</string>
     <string name="label_magnitude">Magnitude:</string>
     <string name="label_coordinates">Longitude &amp; Latitude:</string>
-    <string name="label_tsunami">Tsunami potential:</string>
+    <string name="label_tsunami">Potential Tsunami:</string>
 
     <string name="yes">Yes</string>
     <string name="no">No</string>

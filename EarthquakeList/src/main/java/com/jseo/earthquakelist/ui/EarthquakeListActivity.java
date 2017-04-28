@@ -21,9 +21,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.jseo.earthquakelist.data.DataRetriever;
-import com.jseo.earthquakelist.data.EarthquakeDataRetriever;
 import com.jseo.earthquakelist.R;
+import com.jseo.earthquakelist.actors.DataRetriever;
+import com.jseo.earthquakelist.actors.EarthquakeDataRetriever;
 import com.jseo.earthquakelist.data.EarthquakeData;
 import com.jseo.earthquakelist.data.EarthquakesSummary;
 
@@ -167,7 +167,6 @@ public class EarthquakeListActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                //TODO use retrievedData to update list
                                 if (isSuccess &&
                                         retrievedData != null &&
                                         retrievedData instanceof EarthquakesSummary) {
@@ -180,6 +179,8 @@ public class EarthquakeListActivity extends AppCompatActivity {
                                     } else {
                                         displayUpdatedData(earthquakeDataList);
                                     }
+                                } else if (!isSuccess) {
+                                    displayRetrievalFailed();
                                 } else {
                                     displayEmptyList();
                                 }
@@ -197,7 +198,8 @@ public class EarthquakeListActivity extends AppCompatActivity {
         mAdapter.setEarthquakeData(updatedData);
         mAdapter.notifyDataSetChanged();
         findViewById(R.id.earthquake_list).setVisibility(View.VISIBLE);
-        findViewById(R.id.list_empty).setVisibility(View.GONE);
+        findViewById(R.id.list_empty_text).setVisibility(View.GONE);
+        findViewById(R.id.retrieval_failed_layout).setVisibility(View.GONE);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setSubtitle(SUBTITLE_RESOURCES[mMagnitudeFilter.mIndex]);
@@ -207,12 +209,29 @@ public class EarthquakeListActivity extends AppCompatActivity {
         mAdapter.setEarthquakeData(new ArrayList<EarthquakeData>());
         mAdapter.notifyDataSetChanged();
         findViewById(R.id.earthquake_list).setVisibility(View.GONE);
-        findViewById(R.id.list_empty).setVisibility(View.VISIBLE);
+        findViewById(R.id.list_empty_text).setVisibility(View.VISIBLE);
+        findViewById(R.id.retrieval_failed_layout).setVisibility(View.GONE);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setSubtitle(SUBTITLE_RESOURCES[mMagnitudeFilter.mIndex]);
     }
 
+    private void displayRetrievalFailed() {
+        mAdapter.setEarthquakeData(new ArrayList<EarthquakeData>());
+        mAdapter.notifyDataSetChanged();
+        findViewById(R.id.earthquake_list).setVisibility(View.GONE);
+        findViewById(R.id.list_empty_text).setVisibility(View.GONE);
+        findViewById(R.id.retrieval_failed_layout).setVisibility(View.VISIBLE);
+        findViewById(R.id.retry_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gatherEarthquakeData();
+            }
+        });
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setSubtitle(SUBTITLE_RESOURCES[mMagnitudeFilter.mIndex]);
+    }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
         mAdapter = new EarthquakeRecyclerViewAdapter(this);

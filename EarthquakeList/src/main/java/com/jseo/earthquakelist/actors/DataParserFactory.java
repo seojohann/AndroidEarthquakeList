@@ -1,4 +1,4 @@
-package com.jseo.earthquakelist.data;
+package com.jseo.earthquakelist.actors;
 
 import com.google.gson.stream.JsonReader;
 

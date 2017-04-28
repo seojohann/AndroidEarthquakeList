@@ -1,4 +1,4 @@
-package com.jseo.earthquakelist.data;
+package com.jseo.earthquakelist.actors;
 
 import com.google.gson.stream.JsonReader;
 
@@ -24,13 +24,11 @@ public class EarthquakeDataRetriever extends DataRetriever {
         Thread retrieverThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                URLConnection connection;
                 InputStream in = null;
                 JsonReader jsonReader = null;
                 try {
                     URL url = new URL(getUrlString());
-                    connection = url.openConnection();
-                    HttpsURLConnection httpsConnection = (HttpsURLConnection)connection;
+                    HttpsURLConnection httpsConnection = (HttpsURLConnection)url.openConnection();
 
                     int responseCode = httpsConnection.getResponseCode();
                     if (responseCode == HttpsURLConnection.HTTP_OK) {
@@ -42,6 +40,8 @@ public class EarthquakeDataRetriever extends DataRetriever {
                         setDataParser(jsonReader);
                         parseData();
 
+                    } else {
+                        getOnRetrieveCompleteListener().onRetrieveComplete(false, null);
                     }
                 } catch (Exception ex) {
                     ex.printStackTrace();

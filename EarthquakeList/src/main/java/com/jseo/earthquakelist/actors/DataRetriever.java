@@ -1,4 +1,4 @@
-package com.jseo.earthquakelist.data;
+package com.jseo.earthquakelist.actors;
 
 /**
  * connect and retrieve data. after data is retrieved it should be parsed by appropriate parser
