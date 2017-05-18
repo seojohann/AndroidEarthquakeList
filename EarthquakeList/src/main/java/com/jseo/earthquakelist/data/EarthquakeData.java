@@ -3,66 +3,73 @@ package com.jseo.earthquakelist.data;
 /**
  * each earthquake data consists of three parts: Id, Properties, and coordinates
  */
-public class JsonReaderEarthquakeData {
+public class EarthquakeData {
 
-    private String mId;
-    private Properties mProperties;
-    private Geometry mGeometry;
+    private String id;
+    private Properties properties;
+    private Geometry geometry;
 
     public String getId() {
-        return mId;
+        return id;
     }
 
     public void setId(String mId) {
-        this.mId = mId;
+        this.id = mId;
     }
 
     public Properties getProperties() {
-        return mProperties;
+        return properties;
     }
 
     public void setProperties(Properties mProperties) {
-        this.mProperties = mProperties;
+        this.properties = mProperties;
     }
 
     public Geometry getGeometry() {
-        return mGeometry;
+        return geometry;
     }
 
     public void setGeometry(Geometry geometry) {
-        this.mGeometry = geometry;
+        this.geometry = geometry;
     }
 
     
     
     public static class Geometry {
-        private double mLongitude;
-        private double mLatitude;
-        private double mDepth;
+        private double[] coordinates;
+
+        public double[] getCoordinates() {
+            return coordinates;
+        }
+
+        public Geometry() {
+            coordinates = new double[3];
+        }
 
         public double getLongitude() {
-            return mLongitude;
+            return coordinates[0];
         }
 
         public void setLongitude(double mLongitude) {
-            this.mLongitude = mLongitude;
+            coordinates[0] = mLongitude;
         }
 
         public double getLatitude() {
-            return mLatitude;
+            return coordinates[1];
         }
 
         public void setLatitude(double mLatitude) {
-            this.mLatitude = mLatitude;
+            coordinates[1] = mLatitude;
         }
 
         public double getDepth() {
-            return mDepth;
+            return coordinates[2];
         }
 
         public void setDepth(double mDepth) {
-            this.mDepth = mDepth;
+            coordinates[2] = mDepth;
         }
+
     }
 
     /**
@@ -95,230 +102,230 @@ public class JsonReaderEarthquakeData {
      */
     public static class Properties {
 
-        private double mMag;
-        private String mPlace;
-        private long mTime;
-        private long mUpdated;
-        private int mTz; //time zone
-        private String mUrl;
-        private String mDetail;
-        private int mFelt;
-        private double mCdi;
-        private double mMmi;
-        private String mAlert;
-        private String mStatus;
-        private int mTsunami;
-        private int mSig;
-        private String mNet;
-        private String mCode;
-        private String mIds;
-        private String mSources;
-        private String mTypes;
-        private int mNst;
-        private double mDmin;
-        private double mRms;
-        private double mGap;
-        private String mMagType;
-        private String mType;
+        private double mag;
+        private String place;
+        private long time;
+        private long updated;
+        private int tz; //time zone
+        private String url;
+        private String detail;
+        private int felt;
+        private double cdi;
+        private double mmi;
+        private String alert;
+        private String status;
+        private int tsunami;
+        private int sig;
+        private String net;
+        private String code;
+        private String ids;
+        private String sources;
+        private String types;
+        private int nst;
+        private double dmin;
+        private double rms;
+        private double gap;
+        private String magtype;
+        private String type;
 
         public double getMag() {
-            return mMag;
+            return mag;
         }
 
         public void setMag(double mMag) {
-            this.mMag = mMag;
+            this.mag = mMag;
         }
 
         public String getPlace() {
-            return mPlace;
+            return place;
         }
 
         public void setPlace(String mPlace) {
-            this.mPlace = mPlace;
+            this.place = mPlace;
         }
 
         public long getTime() {
-            return mTime;
+            return time;
         }
 
         public void setTime(long mTime) {
-            this.mTime = mTime;
+            this.time = mTime;
         }
 
         public long getUpdated() {
-            return mUpdated;
+            return updated;
         }
 
         public void setUpdated(long mUpdated) {
-            this.mUpdated = mUpdated;
+            this.updated = mUpdated;
         }
 
         public int getTz() {
-            return mTz;
+            return tz;
         }
 
         public void setTz(int mTz) {
-            this.mTz = mTz;
+            this.tz = mTz;
         }
 
         public String getUrl() {
-            return mUrl;
+            return url;
         }
 
         public void setUrl(String mUrl) {
-            this.mUrl = mUrl;
+            this.url = mUrl;
         }
 
         public String getDetail() {
-            return mDetail;
+            return detail;
         }
 
         public void setDetail(String mDetail) {
-            this.mDetail = mDetail;
+            this.detail = mDetail;
         }
 
         public int getFelt() {
-            return mFelt;
+            return felt;
         }
 
         public void setFelt(int mFelt) {
-            this.mFelt = mFelt;
+            this.felt = mFelt;
         }
 
         public double getCdi() {
-            return mCdi;
+            return cdi;
         }
 
         public void setCdi(double mCdi) {
-            this.mCdi = mCdi;
+            this.cdi = mCdi;
         }
 
         public double getMmi() {
-            return mMmi;
+            return mmi;
         }
 
         public void setMmi(double mMmi) {
-            this.mMmi = mMmi;
+            this.mmi = mMmi;
         }
 
         public String getAlert() {
-            return mAlert;
+            return alert;
         }
 
         public void setAlert(String mAlert) {
-            this.mAlert = mAlert;
+            this.alert = mAlert;
         }
 
         public String getStatus() {
-            return mStatus;
+            return status;
         }
 
         public void setStatus(String mStatus) {
-            this.mStatus = mStatus;
+            this.status = mStatus;
         }
 
         public int getTsunami() {
-            return mTsunami;
+            return tsunami;
         }
 
         public void setTsunami(int mTsunami) {
-            this.mTsunami = mTsunami;
+            this.tsunami = mTsunami;
         }
 
         public int getSig() {
-            return mSig;
+            return sig;
         }
 
         public void setSig(int mSig) {
-            this.mSig = mSig;
+            this.sig = mSig;
         }
 
         public String getNet() {
-            return mNet;
+            return net;
         }
 
         public void setNet(String mNet) {
-            this.mNet = mNet;
+            this.net = mNet;
         }
 
         public String getCode() {
-            return mCode;
+            return code;
         }
 
         public void setCode(String mCode) {
-            this.mCode = mCode;
+            this.code = mCode;
         }
 
         public String getIds() {
-            return mIds;
+            return ids;
         }
 
         public void setIds(String mIds) {
-            this.mIds = mIds;
+            this.ids = mIds;
         }
 
         public String getSources() {
-            return mSources;
+            return sources;
         }
 
         public void setSources(String mSources) {
-            this.mSources = mSources;
+            this.sources = mSources;
         }
 
         public String getTypes() {
-            return mTypes;
+            return types;
         }
 
         public void setTypes(String mTypes) {
-            this.mTypes = mTypes;
+            this.types = mTypes;
         }
 
         public int getNst() {
-            return mNst;
+            return nst;
         }
 
         public void setNst(int mNst) {
-            this.mNst = mNst;
+            this.nst = mNst;
         }
 
         public double getDmin() {
-            return mDmin;
+            return dmin;
         }
 
         public void setDmin(double mDmin) {
-            this.mDmin = mDmin;
+            this.dmin = mDmin;
         }
 
         public double getRms() {
-            return mRms;
+            return rms;
         }
 
         public void setRms(double mRms) {
-            this.mRms = mRms;
+            this.rms = mRms;
         }
 
         public double getGap() {
-            return mGap;
+            return gap;
         }
 
         public void setGap(double mGap) {
-            this.mGap = mGap;
+            this.gap = mGap;
         }
 
         public String getMagType() {
-            return mMagType;
+            return magtype;
         }
 
         public void setMagType(String mMagType) {
-            this.mMagType = mMagType;
+            this.magtype = mMagType;
         }
 
         public String getType() {
-            return mType;
+            return type;
         }
 
         public void setType(String mType) {
-            this.mType = mType;
+            this.type = mType;
         }
     }
 }

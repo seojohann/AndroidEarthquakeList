@@ -2,7 +2,8 @@ package com.jseo.earthquakelist.actors;
 
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
-import com.jseo.earthquakelist.data.JsonReaderEarthquakeData;
+import com.jseo.earthquakelist.data.EarthquakeData;
+import com.jseo.earthquakelist.data.EarthquakesSummary;
 import com.jseo.earthquakelist.data.JsonReaderEarthquakesSummary;
 
 import java.io.IOException;
@@ -56,7 +57,7 @@ class GeoJsonDataParser extends DataParser {
 
     private final static String ID = "id";
 
-    private JsonReaderEarthquakesSummary mEarthquakesSummary;
+    private EarthquakesSummary mEarthquakesSummary;
 
     GeoJsonDataParser() {
         super();
@@ -65,7 +66,7 @@ class GeoJsonDataParser extends DataParser {
     }
 
     @Override
-    void parse() {
+    public void parse() {
         boolean success = true;
         JsonReader jsonReader = (JsonReader)getData();
 
@@ -158,18 +159,19 @@ class GeoJsonDataParser extends DataParser {
      * bbox. parse but not using at this time
      */
     private void parseBboxArray(JsonReader jsonReader) throws IOException {
-        JsonReaderEarthquakesSummary.Bbox bbox = mEarthquakesSummary.getBbox();
-
         jsonReader.beginArray();
 
         //should be in order of minimum longitude, minimum latitude, minimum depth,
         // maximum longitude, maximum latitude, and then maximum depth
-        bbox.setMinLongitude(jsonReader.nextDouble());
-        bbox.setMinLatitude(jsonReader.nextDouble());
-        bbox.setMinDepth(jsonReader.nextDouble());
-        bbox.setMaxLongitude(jsonReader.nextDouble());
-        bbox.setMaxLatitude(jsonReader.nextDouble());
-        bbox.setMaxDepth(jsonReader.nextDouble());
+        EarthquakesSummary.Bbox bboxObj = new EarthquakesSummary.Bbox();
+        bboxObj.setMinLongitude(jsonReader.nextDouble());
+        bboxObj.setMinLatitude(jsonReader.nextDouble());
+        bboxObj.setMinDepth(jsonReader.nextDouble());
+        bboxObj.setMaxLongitude(jsonReader.nextDouble());
+        bboxObj.setMaxLatitude(jsonReader.nextDouble());
+        bboxObj.setMaxDepth(jsonReader.nextDouble());
+
+        mEarthquakesSummary.setBbox(bboxObj);
 
         jsonReader.endArray();
     }
@@ -190,8 +192,8 @@ class GeoJsonDataParser extends DataParser {
     /**
      * parse individual earthquake for information
      */
-    private JsonReaderEarthquakeData parseEarthquake(JsonReader jsonReader) throws IOException {
-        JsonReaderEarthquakeData earthquakeData = new JsonReaderEarthquakeData();
+    private EarthquakeData parseEarthquake(JsonReader jsonReader) throws IOException {
+        EarthquakeData earthquakeData = new EarthquakeData();
         jsonReader.beginObject();
 
         //long list of earthquake property
@@ -223,8 +225,8 @@ class GeoJsonDataParser extends DataParser {
     /**
      * each earthquake has its own properties
      */
-    private JsonReaderEarthquakeData.Properties parseProperties(JsonReader jsonReader) throws IOException {
-        JsonReaderEarthquakeData.Properties properties = new JsonReaderEarthquakeData.Properties();
+    private EarthquakeData.Properties parseProperties(JsonReader jsonReader) throws IOException {
+        EarthquakeData.Properties properties = new EarthquakeData.Properties();
 
         jsonReader.beginObject();
         while (jsonReader.hasNext()) {
@@ -322,8 +324,8 @@ class GeoJsonDataParser extends DataParser {
     /**
      * get the geometry information of the earthquake
      */
-    private JsonReaderEarthquakeData.Geometry parseGeometry(JsonReader jsonReader) throws IOException {
-        JsonReaderEarthquakeData.Geometry geometry = null;
+    private EarthquakeData.Geometry parseGeometry(JsonReader jsonReader) throws IOException {
+        EarthquakeData.Geometry geometry = null;
 
         jsonReader.beginObject();
         while (jsonReader.hasNext()) {
@@ -342,9 +344,9 @@ class GeoJsonDataParser extends DataParser {
     /**
      * get longitude and latitude of the earthquake
      */
-    private JsonReaderEarthquakeData.Geometry parseCoordinatesArray(JsonReader jsonReader)
+    private EarthquakeData.Geometry parseCoordinatesArray(JsonReader jsonReader)
             throws IOException {
-        JsonReaderEarthquakeData.Geometry geometry = new JsonReaderEarthquakeData.Geometry();
+        EarthquakeData.Geometry geometry = new EarthquakeData.Geometry();
 
         //should be in order of longitude, latitude, and then depth
         jsonReader.beginArray();

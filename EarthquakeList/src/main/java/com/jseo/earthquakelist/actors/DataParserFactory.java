@@ -3,6 +3,8 @@ package com.jseo.earthquakelist.actors;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 
+import org.json.JSONObject;
+
 /**
  * decide on which datatype parser to create instance of and return. for now we only have json
  * as provided on the USGS site. this possibly leaves a room for extension
@@ -15,7 +17,7 @@ public class DataParserFactory {
             dataParser = new GeoJsonDataParser();
             dataParser.setData(data);
             return dataParser;
-        } else if (data instanceof JsonObject) {
+        } else if (data instanceof String) {
             dataParser = new GeoJsonObjectParser();
             dataParser.setData(data);
             return dataParser;
