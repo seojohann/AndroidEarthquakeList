@@ -7,13 +7,13 @@ import java.util.List;
  * Earthquakes Summary consists of three parts, metadata, bbox, and features (list of earthquakes)
  */
 
-public class EarthquakesSummary {
+public class JsonReaderEarthquakesSummary {
 
     private Metadata mMetadata;
     private Bbox mBbox;
-    private List<EarthquakeData> mEarthquakeList;
+    private List<JsonReaderEarthquakeData> mEarthquakeList;
 
-    public EarthquakesSummary() {
+    public JsonReaderEarthquakesSummary() {
         mMetadata = new Metadata();
         mBbox = new Bbox();
         mEarthquakeList = new ArrayList<>();
@@ -35,15 +35,15 @@ public class EarthquakesSummary {
         this.mBbox = mBbox;
     }
 
-    public List<EarthquakeData> getEarthquakeList() {
+    public List<JsonReaderEarthquakeData> getEarthquakeList() {
         return mEarthquakeList;
     }
 
-    public void setEarthquakeList(List<EarthquakeData> mEarthquakeList) {
+    public void setEarthquakeList(List<JsonReaderEarthquakeData> mEarthquakeList) {
         this.mEarthquakeList = mEarthquakeList;
     }
 
-    public void addEarthquakeData(EarthquakeData earthquake) {
+    public void addEarthquakeData(JsonReaderEarthquakeData earthquake) {
         mEarthquakeList.add(earthquake);
     }
 

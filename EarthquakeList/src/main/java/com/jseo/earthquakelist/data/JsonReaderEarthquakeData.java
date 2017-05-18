@@ -3,7 +3,7 @@ package com.jseo.earthquakelist.data;
 /**
  * each earthquake data consists of three parts: Id, Properties, and coordinates
  */
-public class EarthquakeData {
+public class JsonReaderEarthquakeData {
 
     private String mId;
     private Properties mProperties;

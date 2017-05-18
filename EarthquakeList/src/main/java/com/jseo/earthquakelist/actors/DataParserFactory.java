@@ -1,5 +1,6 @@
 package com.jseo.earthquakelist.actors;
 
+import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 
 /**
@@ -12,6 +13,10 @@ public class DataParserFactory {
         DataParser dataParser;
         if (data instanceof JsonReader) {
             dataParser = new GeoJsonDataParser();
+            dataParser.setData(data);
+            return dataParser;
+        } else if (data instanceof JsonObject) {
+            dataParser = new GeoJsonObjectParser();
             dataParser.setData(data);
             return dataParser;
         } else {

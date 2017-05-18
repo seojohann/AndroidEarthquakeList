@@ -41,12 +41,12 @@ public class EarthquakeDataRetriever extends DataRetriever {
                         parseData();
 
                     } else {
-                        getOnRetrieveCompleteListener().onRetrieveComplete(false, null);
+                        callOnRetrieveComplete(false, null);
                     }
                 } catch (Exception ex) {
                     ex.printStackTrace();
 
-                    getOnRetrieveCompleteListener().onRetrieveComplete(false, null);
+                    callOnRetrieveComplete(false, null);
                 } finally {
                     closeCloseable(in);
                     closeCloseable(jsonReader);

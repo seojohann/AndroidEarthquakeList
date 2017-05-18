@@ -34,10 +34,6 @@ public abstract class DataRetriever {
         mOnCompleteListener = listener;
     }
 
-    public OnRetrieveCompleteListener getOnRetrieveCompleteListener() {
-        return mOnCompleteListener;
-    }
-
     public void setUrlString(String urlString) {
         mUrlString = urlString;
     }
@@ -51,11 +47,15 @@ public abstract class DataRetriever {
         mParser.setOnParseCompleteListener(new DataParser.OnParseCompleteListener() {
             @Override
             public void onParseComplete(boolean isSuccess, Object parsedData) {
-                if (mOnCompleteListener != null) {
-                    mOnCompleteListener.onRetrieveComplete(isSuccess, parsedData);
-                }
+                callOnRetrieveComplete(isSuccess, parsedData);
             }
         });
+    }
+
+    protected void callOnRetrieveComplete(boolean isSuccess, Object data) {
+        if (mOnCompleteListener != null) {
+            mOnCompleteListener.onRetrieveComplete(isSuccess, data);
+        }
     }
 
     /**

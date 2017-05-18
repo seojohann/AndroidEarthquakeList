@@ -2,8 +2,8 @@ package com.jseo.earthquakelist.actors;
 
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
-import com.jseo.earthquakelist.data.EarthquakeData;
-import com.jseo.earthquakelist.data.EarthquakesSummary;
+import com.jseo.earthquakelist.data.JsonReaderEarthquakeData;
+import com.jseo.earthquakelist.data.JsonReaderEarthquakesSummary;
 
 import java.io.IOException;
 
@@ -56,12 +56,12 @@ class GeoJsonDataParser extends DataParser {
 
     private final static String ID = "id";
 
-    private EarthquakesSummary mEarthquakesSummary;
+    private JsonReaderEarthquakesSummary mEarthquakesSummary;
 
     GeoJsonDataParser() {
         super();
 
-        mEarthquakesSummary = new EarthquakesSummary();
+        mEarthquakesSummary = new JsonReaderEarthquakesSummary();
     }
 
     @Override
@@ -117,7 +117,7 @@ class GeoJsonDataParser extends DataParser {
      * parse metadata of the summary
      */
     private void parseMatadata(JsonReader jsonReader) throws IOException {
-        EarthquakesSummary.Metadata metadata = mEarthquakesSummary.getMetadata();
+        JsonReaderEarthquakesSummary.Metadata metadata = mEarthquakesSummary.getMetadata();
 
         jsonReader.beginObject();
         while (jsonReader.hasNext()) {
@@ -158,7 +158,7 @@ class GeoJsonDataParser extends DataParser {
      * bbox. parse but not using at this time
      */
     private void parseBboxArray(JsonReader jsonReader) throws IOException {
-        EarthquakesSummary.Bbox bbox = mEarthquakesSummary.getBbox();
+        JsonReaderEarthquakesSummary.Bbox bbox = mEarthquakesSummary.getBbox();
 
         jsonReader.beginArray();
 
@@ -190,8 +190,8 @@ class GeoJsonDataParser extends DataParser {
     /**
      * parse individual earthquake for information
      */
-    private EarthquakeData parseEarthquake(JsonReader jsonReader) throws IOException {
-        EarthquakeData earthquakeData = new EarthquakeData();
+    private JsonReaderEarthquakeData parseEarthquake(JsonReader jsonReader) throws IOException {
+        JsonReaderEarthquakeData earthquakeData = new JsonReaderEarthquakeData();
         jsonReader.beginObject();
 
         //long list of earthquake property
@@ -223,8 +223,8 @@ class GeoJsonDataParser extends DataParser {
     /**
      * each earthquake has its own properties
      */
-    private EarthquakeData.Properties parseProperties(JsonReader jsonReader) throws IOException {
-        EarthquakeData.Properties properties = new EarthquakeData.Properties();
+    private JsonReaderEarthquakeData.Properties parseProperties(JsonReader jsonReader) throws IOException {
+        JsonReaderEarthquakeData.Properties properties = new JsonReaderEarthquakeData.Properties();
 
         jsonReader.beginObject();
         while (jsonReader.hasNext()) {
@@ -322,8 +322,8 @@ class GeoJsonDataParser extends DataParser {
     /**
      * get the geometry information of the earthquake
      */
-    private EarthquakeData.Geometry parseGeometry(JsonReader jsonReader) throws IOException {
-        EarthquakeData.Geometry geometry = null;
+    private JsonReaderEarthquakeData.Geometry parseGeometry(JsonReader jsonReader) throws IOException {
+        JsonReaderEarthquakeData.Geometry geometry = null;
 
         jsonReader.beginObject();
         while (jsonReader.hasNext()) {
@@ -342,9 +342,9 @@ class GeoJsonDataParser extends DataParser {
     /**
      * get longitude and latitude of the earthquake
      */
-    private EarthquakeData.Geometry parseCoordinatesArray(JsonReader jsonReader)
+    private JsonReaderEarthquakeData.Geometry parseCoordinatesArray(JsonReader jsonReader)
             throws IOException {
-        EarthquakeData.Geometry geometry = new EarthquakeData.Geometry();
+        JsonReaderEarthquakeData.Geometry geometry = new JsonReaderEarthquakeData.Geometry();
 
         //should be in order of longitude, latitude, and then depth
         jsonReader.beginArray();
