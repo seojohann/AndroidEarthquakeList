@@ -8,7 +8,7 @@ public abstract class DataParser {
     private OnParseCompleteListener mOnCompleteListener;
     private Object mData;
 
-    interface OnParseCompleteListener {
+    public interface OnParseCompleteListener {
         void onParseComplete(boolean isSuccess, Object parsedData);
     }
 
@@ -41,7 +41,7 @@ public abstract class DataParser {
     public Object getData() { return mData; }
 
     //let derived class implement how to parse data
-    abstract void parse();
+    public abstract void parse();
 
 
 }

@@ -25,7 +25,8 @@ import com.jseo.earthquakelist.R;
 import com.jseo.earthquakelist.actors.DataRetriever;
 import com.jseo.earthquakelist.actors.EarthquakeDataRetriever;
 import com.jseo.earthquakelist.actors.EarthquakeDataViaVolleyRetriever;
-import com.jseo.earthquakelist.data.JsonReaderEarthquakeData;
+import com.jseo.earthquakelist.data.EarthquakeData;
+import com.jseo.earthquakelist.data.EarthquakesSummary;
 import com.jseo.earthquakelist.data.JsonReaderEarthquakesSummary;
 
 import java.net.URL;
@@ -150,7 +151,10 @@ public class EarthquakeListActivity extends AppCompatActivity {
      */
     private void gatherEarthquakeData() {
 
+        //choose which method to retrieve. httpurlconnection
         DataRetriever dataRetriever = new EarthquakeDataRetriever();
+        //or volley, released from google
+        dataRetriever = new EarthquakeDataViaVolleyRetriever(this);
         String urlString = getString(URL_RESOURCES[mMagnitudeFilter.mIndex]);
         try {
             URL url = new URL(urlString);
@@ -170,10 +174,10 @@ public class EarthquakeListActivity extends AppCompatActivity {
                             public void run() {
                                 if (isSuccess &&
                                         retrievedData != null &&
-                                        retrievedData instanceof JsonReaderEarthquakesSummary) {
-                                    JsonReaderEarthquakesSummary earthquakesSummary =
-                                            (JsonReaderEarthquakesSummary)retrievedData;
-                                    List<JsonReaderEarthquakeData> earthquakeDataList =
+                                        retrievedData instanceof EarthquakesSummary) {
+                                    EarthquakesSummary earthquakesSummary =
+                                            (EarthquakesSummary)retrievedData;
+                                    List<EarthquakeData> earthquakeDataList =
                                             earthquakesSummary.getEarthquakeList();
                                     if (earthquakeDataList.isEmpty()) {
                                         displayEmptyList();
@@ -195,7 +199,7 @@ public class EarthquakeListActivity extends AppCompatActivity {
 
     }
 
-    private void displayUpdatedData(List<JsonReaderEarthquakeData> updatedData) {
+    private void displayUpdatedData(List<EarthquakeData> updatedData) {
         mAdapter.setEarthquakeData(updatedData);
         mAdapter.notifyDataSetChanged();
         findViewById(R.id.earthquake_list).setVisibility(View.VISIBLE);
@@ -211,7 +215,7 @@ public class EarthquakeListActivity extends AppCompatActivity {
     }
 
     private void displayEmptyList() {
-        mAdapter.setEarthquakeData(new ArrayList<JsonReaderEarthquakeData>());
+        mAdapter.setEarthquakeData(new ArrayList<EarthquakeData>());
         mAdapter.notifyDataSetChanged();
         findViewById(R.id.earthquake_list).setVisibility(View.GONE);
         View detailContainer = findViewById(R.id.earthquake_detail_container);
@@ -226,7 +230,7 @@ public class EarthquakeListActivity extends AppCompatActivity {
     }
 
     private void displayRetrievalFailed() {
-        mAdapter.setEarthquakeData(new ArrayList<JsonReaderEarthquakeData>());
+        mAdapter.setEarthquakeData(new ArrayList<EarthquakeData>());
         mAdapter.notifyDataSetChanged();
         findViewById(R.id.earthquake_list).setVisibility(View.GONE);
         View detailContainer = findViewById(R.id.earthquake_detail_container);
@@ -267,7 +271,7 @@ public class EarthquakeListActivity extends AppCompatActivity {
             private final TextView mTime;
             private final TextView mPlace;
             private final TextView mMag;
-            //GsonEarthquakeData mData;
+            //EarthquakeData mData;
 
             public EarthquakeItemViewHolder(View view) {
                 super(view);
@@ -284,9 +288,9 @@ public class EarthquakeListActivity extends AppCompatActivity {
             }
         }
 
-        List<JsonReaderEarthquakeData> mData = null;
+        List<EarthquakeData> mData = null;
 
-        private void setEarthquakeData(List<JsonReaderEarthquakeData> data) {
+        private void setEarthquakeData(List<EarthquakeData> data) {
             mData = data;
         }
 
@@ -299,8 +303,8 @@ public class EarthquakeListActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(EarthquakeItemViewHolder holder, int position) {
-            final JsonReaderEarthquakeData earthquakeData = mData.get(position);
-            final JsonReaderEarthquakeData.Properties earthquakeProperties = earthquakeData.getProperties();
+            final EarthquakeData earthquakeData = mData.get(position);
+            final EarthquakeData.Properties earthquakeProperties = earthquakeData.getProperties();
             long timeLong = earthquakeProperties.getTime();
             holder.mTime.setText(convertTime(timeLong));
             holder.mPlace.setText(earthquakeProperties.getPlace());
