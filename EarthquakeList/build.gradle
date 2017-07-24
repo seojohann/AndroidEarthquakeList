@@ -1,8 +1,16 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'js_release'
+            keyPassword 'js_release'
+            storeFile file('C:/Users/john.seo/StudioProjects/EarthquakeList/keys/js_release.jks')
+            storePassword 'js_release'
+        }
+    }
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion "25.0.3"
     defaultConfig {
         applicationId "com.jseo.earthquakelist"
         minSdkVersion 15
@@ -15,12 +23,15 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
+    }
+    productFlavors {
     }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -29,7 +40,8 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
     testCompile 'junit:junit:4.12'
-
     compile 'com.android.volley:volley:1.0.0'
     compile 'com.google.code.gson:gson:2.7'
+    compile 'com.google.android.gms:play-services-ads:11.0.2'
+    compile 'com.google.firebase:firebase-core:11.0.2'
 }

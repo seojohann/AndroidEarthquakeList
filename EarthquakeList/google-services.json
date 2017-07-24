@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "581207699957",
+    "firebase_url": "https://earthquakeslist.firebaseio.com",
+    "project_id": "earthquakeslist",
+    "storage_bucket": "earthquakeslist.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:581207699957:android:47985452fc618949",
+        "android_client_info": {
+          "package_name": "com.jseo.earthquakelist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "581207699957-8jji3ubdavki5g4h4um63r8edges2b1n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jseo.earthquakelist",
+            "certificate_hash": "e49658115476d00fef4741a0a716403a868cbbd5"
+          }
+        },
+        {
+          "client_id": "581207699957-38pksiv43bl2he7kq7t7qij6n5dbjvi8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYfOXIAUKR_WDH4Sd8GdgslI8al0j2Q4U"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "581207699957-38pksiv43bl2he7kq7t7qij6n5dbjvi8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

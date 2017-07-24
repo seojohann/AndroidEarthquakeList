@@ -21,13 +21,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.jseo.earthquakelist.R;
 import com.jseo.earthquakelist.actors.DataRetriever;
 import com.jseo.earthquakelist.actors.EarthquakeDataRetriever;
 import com.jseo.earthquakelist.actors.EarthquakeDataViaVolleyRetriever;
 import com.jseo.earthquakelist.data.EarthquakeData;
 import com.jseo.earthquakelist.data.EarthquakesSummary;
-import com.jseo.earthquakelist.data.JsonReaderEarthquakesSummary;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -52,6 +55,8 @@ public class EarthquakeListActivity extends AppCompatActivity {
      */
     private boolean mTwoPane;
     private EarthquakeRecyclerViewAdapter mAdapter;
+
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     private MagnitudeFilter mMagnitudeFilter = MagnitudeFilter.ALL;
     public enum MagnitudeFilter {
@@ -104,6 +109,19 @@ public class EarthquakeListActivity extends AppCompatActivity {
             // activity should be in two-pane mode.
             mTwoPane = true;
         }
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
+        //my id
+        MobileAds.initialize(this, "ca-app-pub-7438807169301480~2950987624");
+        //test id
+//        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
+
+        AdView adview = (AdView)findViewById(R.id.adView);
+        AdRequest adRequest;
+        adRequest = new AdRequest.Builder().build();
+//        adRequest = new AdRequest.Builder().addTestDevice("81A442EFD7E2204CA5092B6AD6AE3029").build();
+        adview.loadAd(adRequest);
     }
 
     @Override
@@ -362,9 +380,7 @@ public class EarthquakeListActivity extends AppCompatActivity {
             Date date = new Date(time);
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("h:mm:ss a");
 
-            String convertedTime = simpleDateFormat.format(date);
-
-            return convertedTime;
+            return simpleDateFormat.format(date);
         }
     }
 
