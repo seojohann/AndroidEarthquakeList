@@ -1,4 +1,4 @@
-package com.jseo.earthquakelist.actors;
+package com.jsbomb.earthquakelist.actors;
 
 /**
  * connect and retrieve data. after data is retrieved it should be parsed by appropriate parser

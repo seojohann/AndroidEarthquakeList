@@ -1,9 +1,6 @@
-package com.jseo.earthquakelist.actors;
+package com.jsbomb.earthquakelist.actors;
 
-import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
-
-import org.json.JSONObject;
 
 /**
  * decide on which datatype parser to create instance of and return. for now we only have json

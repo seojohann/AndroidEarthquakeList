@@ -1,10 +1,10 @@
-package com.jseo.earthquakelist.actors;
+package com.jsbomb.earthquakelist.actors;
 
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
-import com.jseo.earthquakelist.data.EarthquakeData;
-import com.jseo.earthquakelist.data.EarthquakesSummary;
-import com.jseo.earthquakelist.data.JsonReaderEarthquakesSummary;
+import com.jsbomb.earthquakelist.data.EarthquakeData;
+import com.jsbomb.earthquakelist.data.EarthquakesSummary;
+import com.jsbomb.earthquakelist.data.JsonReaderEarthquakesSummary;
 
 import java.io.IOException;
 

@@ -1,4 +1,4 @@
-package com.jseo.earthquakelist.data;
+package com.jsbomb.earthquakelist.data;
 
 /**
  * each earthquake data consists of three parts: Id, Properties, and coordinates

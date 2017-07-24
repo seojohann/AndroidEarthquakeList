@@ -5,14 +5,14 @@ android {
         config {
             keyAlias 'js_release'
             keyPassword 'js_release'
-            storeFile file('C:/Users/john.seo/StudioProjects/EarthquakeList/keys/js_release.jks')
+            storeFile file('../keys/js_release.jks')
             storePassword 'js_release'
         }
     }
     compileSdkVersion 25
     buildToolsVersion "25.0.3"
     defaultConfig {
-        applicationId "com.jseo.earthquakelist"
+        applicationId "com.jsbomb.earthquakelist"
         minSdkVersion 15
         targetSdkVersion 25
         versionCode 1

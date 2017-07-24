@@ -1,4 +1,4 @@
-package com.jseo.earthquakelist.data;
+package com.jsbomb.earthquakelist.data;
 
 import java.util.ArrayList;
 

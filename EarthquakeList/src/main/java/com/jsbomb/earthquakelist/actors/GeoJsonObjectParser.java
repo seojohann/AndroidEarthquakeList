@@ -1,9 +1,7 @@
-package com.jseo.earthquakelist.actors;
+package com.jsbomb.earthquakelist.actors;
 
 import com.google.gson.Gson;
-import com.jseo.earthquakelist.data.EarthquakesSummary;
-
-import org.json.JSONObject;
+import com.jsbomb.earthquakelist.data.EarthquakesSummary;
 
 /**
  * Created by john.seo on 5/17/2017.

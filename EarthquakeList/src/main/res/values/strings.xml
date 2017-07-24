@@ -41,4 +41,7 @@
         <item name="sig">Significant</item>
     </string-array>
 
+    <string name="main_menu_menu">Menu</string>
+    <string name="main_menu_view_ad">View Ad</string>
+
 </resources>

@@ -6,4 +6,14 @@
         android:id="@+id/main_menu_filter"
         app:showAsAction="withText|ifRoom"
         android:icon="@android:drawable/ic_menu_view"/>
+
+    <item android:title="@string/main_menu_menu"
+        android:id="@+id/main_menu_menu"
+        app:showAsAction="always"
+        android:icon="@android:drawable/ic_menu_preferences"/>
+
+    <item android:title="@string/main_menu_view_ad"
+        android:id="@+id/main_menu_view_ad"
+        app:showAsAction="ifRoom|withText"
+        android:icon="@android:drawable/ic_menu_info_details"/>
 </menu>

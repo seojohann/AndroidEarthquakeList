@@ -1,4 +1,4 @@
-package com.jseo.earthquakelist.ui;
+package com.jsbomb.earthquakelist.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +11,7 @@ import android.view.MenuItem;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
-import com.jseo.earthquakelist.R;
+import com.jsbomb.earthquakelist.R;
 
 /**
  * An activity representing a single Earthquake detail screen. This

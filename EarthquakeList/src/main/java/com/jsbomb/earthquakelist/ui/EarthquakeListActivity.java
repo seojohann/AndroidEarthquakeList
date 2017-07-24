@@ -1,4 +1,4 @@
-package com.jseo.earthquakelist.ui;
+package com.jsbomb.earthquakelist.ui;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -23,14 +23,15 @@ import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.jseo.earthquakelist.R;
-import com.jseo.earthquakelist.actors.DataRetriever;
-import com.jseo.earthquakelist.actors.EarthquakeDataRetriever;
-import com.jseo.earthquakelist.actors.EarthquakeDataViaVolleyRetriever;
-import com.jseo.earthquakelist.data.EarthquakeData;
-import com.jseo.earthquakelist.data.EarthquakesSummary;
+import com.jsbomb.earthquakelist.R;
+import com.jsbomb.earthquakelist.actors.DataRetriever;
+import com.jsbomb.earthquakelist.actors.EarthquakeDataRetriever;
+import com.jsbomb.earthquakelist.actors.EarthquakeDataViaVolleyRetriever;
+import com.jsbomb.earthquakelist.data.EarthquakeData;
+import com.jsbomb.earthquakelist.data.EarthquakesSummary;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -57,6 +58,7 @@ public class EarthquakeListActivity extends AppCompatActivity {
     private EarthquakeRecyclerViewAdapter mAdapter;
 
     private FirebaseAnalytics mFirebaseAnalytics;
+    private InterstitialAd mInterstitialAd;
 
     private MagnitudeFilter mMagnitudeFilter = MagnitudeFilter.ALL;
     public enum MagnitudeFilter {
@@ -122,6 +124,13 @@ public class EarthquakeListActivity extends AppCompatActivity {
         adRequest = new AdRequest.Builder().build();
 //        adRequest = new AdRequest.Builder().addTestDevice("81A442EFD7E2204CA5092B6AD6AE3029").build();
         adview.loadAd(adRequest);
+
+        mInterstitialAd = new InterstitialAd(this);
+        //my id
+        mInterstitialAd.setAdUnitId("ca-app-pub-7438807169301480/7226587631");
+        //test id
+//        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+
     }
 
     @Override
@@ -129,6 +138,15 @@ public class EarthquakeListActivity extends AppCompatActivity {
         super.onStart();
 
         gatherEarthquakeData();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mInterstitialAd != null && !mInterstitialAd.isLoaded()) {
+            mInterstitialAd.loadAd(new AdRequest.Builder().build());
+//            mInterstitialAd.loadAd(new AdRequest.Builder().addTestDevice("81A442EFD7E2204CA5092B6AD6AE3029").build());
+        }
     }
 
     @Override
@@ -156,6 +174,13 @@ public class EarthquakeListActivity extends AppCompatActivity {
                 });
                 selectMagnitudeDialog.show(fragmentManager, "select");
                 return true;
+
+            case R.id.main_menu_view_ad:
+                if (mInterstitialAd.isLoaded()) {
+                    mInterstitialAd.show();
+                }
+                return true;
+
             default:
                 break;
         }
