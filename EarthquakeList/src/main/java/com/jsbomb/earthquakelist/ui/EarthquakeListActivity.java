@@ -181,6 +181,12 @@ public class EarthquakeListActivity extends AppCompatActivity {
                 }
                 return true;
 
+            case R.id.main_menu_menu:
+                Intent intent = new Intent();
+                intent.setPackage("com.jsbomb.earthquakelist");
+                intent.setClassName("com.jsbomb.earthquakelist", GdaxActivity.class.getName());
+                startActivity(intent);
+
             default:
                 break;
         }

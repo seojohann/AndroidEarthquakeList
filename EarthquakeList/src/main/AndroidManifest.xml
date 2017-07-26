@@ -30,6 +30,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jsbomb.earthquakelist.ui.EarthquakeListActivity" />
         </activity>
+
+        <activity android:name=".ui.GdaxActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="orientation|screenSize"/>
+
     </application>
 
 </manifest>
