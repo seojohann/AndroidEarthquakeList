@@ -1,17 +1,17 @@
 package com.jsbomb.earthquakelist.ui;
 
 
-import android.content.res.Configuration;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageButton;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -23,6 +23,8 @@ import com.jsbomb.earthquakelist.R;
  */
 public class GdaxActivity extends AppCompatActivity {
 
+    WebView mWebView;
+    boolean mClearHistory;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,19 +32,97 @@ public class GdaxActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_gdax_layout);
 
-        WebView webView = (WebView)findViewById(R.id.webView);
-        WebSettings webSettings = webView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
+        initWebView();
 
-        webView.setWebViewClient(new WebViewClient() {
+        initAdView();
+
+        ImageButton button = (ImageButton)findViewById(R.id.imageButton);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GdaxActivity.this.finish();
+            }
+        });
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        mWebView.reload();
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(mWebView != null) {
+            SharedPreferences prefs = getApplicationContext().
+                    getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
+            String url = prefs.getString("url","");
+            if(!url.isEmpty()) {
+                mWebView.loadUrl(url);
+            }
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        SharedPreferences prefs = getApplicationContext().
+                getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
+        SharedPreferences.Editor edit = prefs.edit();
+        edit.putString("url", mWebView.getUrl());
+        edit.commit();   // can use edit.apply() but in this case commit is better
+    }
+
+
+
+    @Override
+    public void onBackPressed() {
+        if (mWebView != null && mWebView.canGoBack()) {
+            mWebView.goBack();
+            return;
+        }
+
+        if (mWebView != null && !mWebView.getUrl().equals("https://www.gdax.com/")
+                && !mWebView.canGoBack()) {
+            mWebView.loadUrl("https://www.gdax.com/");
+            mClearHistory = true;
+            return;
+        }
+
+        super.onBackPressed();
+    }
+
+    private void initWebView() {
+        mWebView = (WebView)findViewById(R.id.webView);
+        WebSettings webSettings = mWebView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setUseWideViewPort(true);
+        webSettings.setSupportZoom(true);
+        webSettings.setBuiltInZoomControls(true);
+        webSettings.setDomStorageEnabled(true);
+
+        mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
                 view.loadUrl(request.getUrl().toString());
                 return false;
             }
-        });
-        webView.loadUrl("https://www.gdax.com");
 
+            @Override
+            public void onPageFinished(WebView view, String url) {
+
+                if (mClearHistory) {
+                    mClearHistory = false;
+                    view.clearHistory();
+                }
+                super.onPageFinished(view, url);
+            }
+        });
+        mWebView.loadUrl("https://www.gdax.com/");
+    }
+
+    private void initAdView() {
         //my id
         MobileAds.initialize(this, "ca-app-pub-7438807169301480~2950987624");
         //test id
@@ -55,8 +135,4 @@ public class GdaxActivity extends AppCompatActivity {
         adview.loadAd(adRequest);
     }
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig){
-        super.onConfigurationChanged(newConfig);
-    }
 }
