@@ -45,8 +45,11 @@
         android:layout_margin="@dimen/text_margin"
         android:layout_toEndOf="@id/time_label"
         android:layout_toRightOf="@id/place_label"
+        android:background="?android:attr/selectableItemBackground"
+        android:drawableRight="?android:attr/actionModeWebSearchDrawable"
         android:text="@string/quakes_feed_significant_day_url"
-        android:textAppearance="?attr/textAppearanceListItem" />
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:textColor="@android:color/holo_blue_light" />
 
     <TextView
         android:id="@+id/magnitude_label"
@@ -90,8 +93,12 @@
         android:layout_margin="@dimen/text_margin"
         android:layout_toEndOf="@id/coordinates_label"
         android:layout_toRightOf="@id/coordinates_label"
+        android:autoLink="map"
+        android:background="?android:attr/selectableItemBackground"
+        android:drawableRight="?android:attr/actionModeWebSearchDrawable"
         android:text="@string/format_coordinates"
-        android:textAppearance="?attr/textAppearanceListItem" />
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:textColor="@android:color/holo_blue_light" />
 
     <TextView
         android:id="@+id/tsunami_label"

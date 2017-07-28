@@ -15,6 +15,7 @@ import com.jsbomb.earthquakelist.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * A fragment representing a single Earthquake detail screen.
@@ -36,6 +37,32 @@ public class EarthquakeDetailFragment extends Fragment {
     public static final String ARG_ITEM_TSUNAMI = "item_tsunami";
 
     private EarthquakeDetail mEarthquake;
+
+    View.OnClickListener mLocClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            //marker but zoomed in too close
+            String format = "geo:%s,%s?z=10&q=%s";
+            String queryFormat = "%s,%s(%s M%f)";
+            String encodedQuery = Uri.encode(String.format(Locale.US, queryFormat,
+                    mEarthquake.mLattitude, mEarthquake.mLongitude,
+                    mEarthquake.mPlace, mEarthquake.mMag));
+
+            String uriString = String.format(Locale.US, format,
+                    mEarthquake.mLattitude, mEarthquake.mLongitude, encodedQuery);
+
+            //no marker
+//            format = "geo:%s,%s?z=10&%s";
+//            queryFormat = "(%s M%f)";
+//            encodedQuery = Uri.encode(String.format(Locale.US, queryFormat, mEarthquake.mPlace,
+//                    mEarthquake.mMag));
+//            uriString = String.format(Locale.US, format, mEarthquake.mLattitude,
+//                    mEarthquake.mLongitude, encodedQuery);
+
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(uriString)));
+        }
+    };
+
 
     private class EarthquakeDetail {
         private long mTime;
@@ -94,17 +121,11 @@ public class EarthquakeDetailFragment extends Fragment {
             magView.setText(getString(R.string.format_magnitude, mEarthquake.mMag));
             coordView.setText(getString(R.string.format_coordinates,
                     mEarthquake.mLongitude, mEarthquake.mLattitude));
+
+            placeView.setClickable(true);
             coordView.setClickable(true);
-            coordView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(
-                            new Intent(
-                                    android.content.Intent.ACTION_VIEW,
-                                    Uri.parse("geo:" + mEarthquake.mLongitude + ","
-                                            + mEarthquake.mLattitude)));
-                }
-            });
+            placeView.setOnClickListener(mLocClickListener);
+            coordView.setOnClickListener(mLocClickListener);
 
             tsunamiView.setText(
                     mEarthquake.mTsunami == 1 ? R.string.yes : R.string.no);
