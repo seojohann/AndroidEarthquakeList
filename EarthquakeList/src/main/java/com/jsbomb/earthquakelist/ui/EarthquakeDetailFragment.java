@@ -1,6 +1,8 @@
 package com.jsbomb.earthquakelist.ui;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
@@ -92,6 +94,18 @@ public class EarthquakeDetailFragment extends Fragment {
             magView.setText(getString(R.string.format_magnitude, mEarthquake.mMag));
             coordView.setText(getString(R.string.format_coordinates,
                     mEarthquake.mLongitude, mEarthquake.mLattitude));
+            coordView.setClickable(true);
+            coordView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(
+                            new Intent(
+                                    android.content.Intent.ACTION_VIEW,
+                                    Uri.parse("geo:" + mEarthquake.mLongitude + ","
+                                            + mEarthquake.mLattitude)));
+                }
+            });
+
             tsunamiView.setText(
                     mEarthquake.mTsunami == 1 ? R.string.yes : R.string.no);
         } else {
