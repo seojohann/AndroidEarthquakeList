@@ -5,13 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,17 +14,21 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
-import com.google.android.gms.ads.MobileAds;
-import com.google.firebase.analytics.FirebaseAnalytics;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.jsbomb.earthquakelist.R;
 import com.jsbomb.earthquakelist.actors.DataRetriever;
 import com.jsbomb.earthquakelist.actors.EarthquakeDataRetriever;
 import com.jsbomb.earthquakelist.actors.EarthquakeDataViaVolleyRetriever;
 import com.jsbomb.earthquakelist.data.EarthquakeData;
 import com.jsbomb.earthquakelist.data.EarthquakesSummary;
+import com.jsbomb.earthquakelist.databinding.ActivityEarthquakeListBinding;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -57,10 +54,11 @@ public class EarthquakeListActivity extends AppCompatActivity {
     private boolean mTwoPane;
     private EarthquakeRecyclerViewAdapter mAdapter;
 
-    private FirebaseAnalytics mFirebaseAnalytics;
-    private InterstitialAd mInterstitialAd;
+//    private FirebaseAnalytics mFirebaseAnalytics;
+//    private InterstitialAd mInterstitialAd;
 
     private MagnitudeFilter mMagnitudeFilter = MagnitudeFilter.ALL;
+
     public enum MagnitudeFilter {
         ALL(0),
         MAG_10(1),
@@ -94,13 +92,15 @@ public class EarthquakeListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_earthquake_list);
+        ActivityEarthquakeListBinding binding =
+                ActivityEarthquakeListBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = binding.toolbar;
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
 
-        View recyclerView = findViewById(R.id.earthquake_list);
+        View recyclerView = binding.frameLayout.findViewById(R.id.earthquake_list);
         assert recyclerView != null;
         setupRecyclerView((RecyclerView) recyclerView);
 
@@ -112,22 +112,23 @@ public class EarthquakeListActivity extends AppCompatActivity {
             mTwoPane = true;
         }
 
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+//        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         //my id
-        MobileAds.initialize(this, "ca-app-pub-7438807169301480~2950987624");
+//        MobileAds.initialize(this);
+//        MobileAds.initialize(this, "ca-app-pub-7438807169301480~2950987624");
         //test id
 //        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
 
-        AdView adview = (AdView)findViewById(R.id.adView);
-        AdRequest adRequest;
-        adRequest = new AdRequest.Builder().build();
-//        adRequest = new AdRequest.Builder().addTestDevice("81A442EFD7E2204CA5092B6AD6AE3029").build();
-        adview.loadAd(adRequest);
+//        AdView adview = binding.adView;
+//        AdRequest adRequest;
+//        adRequest = new AdRequest.Builder().build();
+////        adRequest = new AdRequest.Builder().addTestDevice("81A442EFD7E2204CA5092B6AD6AE3029").build();
+//        adview.loadAd(adRequest);
 
-        mInterstitialAd = new InterstitialAd(this);
+//        mInterstitialAd = new InterstitialAd(this);
         //my id
-        mInterstitialAd.setAdUnitId("ca-app-pub-7438807169301480/7226587631");
+//        mInterstitialAd.setAdUnitId("ca-app-pub-7438807169301480/7226587631");
         //test id
 //        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
 
@@ -143,10 +144,10 @@ public class EarthquakeListActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (mInterstitialAd != null && !mInterstitialAd.isLoaded()) {
-            mInterstitialAd.loadAd(new AdRequest.Builder().build());
-//            mInterstitialAd.loadAd(new AdRequest.Builder().addTestDevice("81A442EFD7E2204CA5092B6AD6AE3029").build());
-        }
+//        if (mInterstitialAd != null && !mInterstitialAd.isLoaded()) {
+//            mInterstitialAd.loadAd(new AdRequest.Builder().build());
+////            mInterstitialAd.loadAd(new AdRequest.Builder().addTestDevice("81A442EFD7E2204CA5092B6AD6AE3029").build());
+//        }
     }
 
     @Override
@@ -165,20 +166,17 @@ public class EarthquakeListActivity extends AppCompatActivity {
             case R.id.main_menu_filter:
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 SelectMagnitudeDialog selectMagnitudeDialog = new SelectMagnitudeDialog();
-                selectMagnitudeDialog.setFilterSelectedListener(new FilterSelectedListener() {
-                    @Override
-                    public void onFilterSelected(int which) {
-                        mMagnitudeFilter.mIndex = which;
-                        gatherEarthquakeData();
-                    }
+                selectMagnitudeDialog.setFilterSelectedListener(which -> {
+                    mMagnitudeFilter.mIndex = which;
+                    gatherEarthquakeData();
                 });
                 selectMagnitudeDialog.show(fragmentManager, "select");
                 return true;
 
             case R.id.main_menu_view_ad:
-                if (mInterstitialAd.isLoaded()) {
-                    mInterstitialAd.show();
-                }
+//                if (mInterstitialAd.isLoaded()) {
+//                    mInterstitialAd.show();
+//                }
                 return true;
 
             case R.id.main_menu_menu:
@@ -225,7 +223,7 @@ public class EarthquakeListActivity extends AppCompatActivity {
                                         retrievedData != null &&
                                         retrievedData instanceof EarthquakesSummary) {
                                     EarthquakesSummary earthquakesSummary =
-                                            (EarthquakesSummary)retrievedData;
+                                            (EarthquakesSummary) retrievedData;
                                     List<EarthquakeData> earthquakeDataList =
                                             earthquakesSummary.getEarthquakeList();
                                     if (earthquakeDataList.isEmpty()) {
@@ -325,9 +323,9 @@ public class EarthquakeListActivity extends AppCompatActivity {
             public EarthquakeItemViewHolder(View view) {
                 super(view);
                 mView = view;
-                mTime = (TextView)view.findViewById(R.id.time);
-                mPlace = (TextView)view.findViewById(R.id.place);
-                mMag = (TextView)view.findViewById(R.id.magnitude);
+                mTime = (TextView) view.findViewById(R.id.time);
+                mPlace = (TextView) view.findViewById(R.id.place);
+                mMag = (TextView) view.findViewById(R.id.magnitude);
             }
 
             @Override

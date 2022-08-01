@@ -1,38 +1,43 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
-    android:baselineAligned="false"
-    android:divider="?android:attr/dividerHorizontal"
-    android:orientation="horizontal"
-    android:showDividers="middle"
-    tools:context=".ui.EarthquakeListActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <!--
-    This layout is a two-pane layout for the Earthquakes
-    master/detail flow.
-    
-    -->
-
-    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/earthquake_list"
-        android:name="com.jseo.earthquakelist.EarthquakeListFragment"
-        android:layout_width="@dimen/item_width"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        app:layoutManager="LinearLayoutManager"
-        tools:context=".ui.EarthquakeListActivity"
-        tools:listitem="@layout/earthquake_list_item" />
+        android:baselineAligned="false"
+        android:divider="?android:attr/dividerHorizontal"
+        android:orientation="horizontal"
+        android:showDividers="middle"
+        tools:context=".ui.EarthquakeListActivity">
 
-    <FrameLayout
-        android:id="@+id/earthquake_detail_container"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="3" />
+        <!--
+        This layout is a two-pane layout for the Earthquakes
+        master/detail flow.
 
-</LinearLayout>
+        -->
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/earthquake_list"
+            android:name="com.jseo.earthquakelist.EarthquakeListFragment"
+            android:layout_width="@dimen/item_width"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            app:layoutManager="LinearLayoutManager"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="parent"
+            tools:context=".ui.EarthquakeListActivity"
+            tools:listitem="@layout/earthquake_list_item" />
+
+        <FrameLayout
+            android:id="@+id/earthquake_detail_container"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/earthquake_list"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

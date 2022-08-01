@@ -4,13 +4,9 @@ import android.content.Context;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-
-import org.json.JSONObject;
 
 /**
  * Created by john.seo on 5/17/2017.
@@ -29,49 +25,41 @@ public class EarthquakeDataViaVolleyRetriever extends DataRetriever {
         VolleyReqQueue requestQueue = VolleyReqQueue.getInstance(mContext);
 
         String url = getUrlString();
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
+        StringRequest stringRequest =
+                new StringRequest(
+                        Request.Method.GET,
+                        url,
+                        response -> {
+                            try {
+                                setDataParser(response);
 
-                        try {
-                            setDataParser(response);
+                                parseData();
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                                callOnRetrieveComplete(false, null);
+                            }
+                        },
+                        error -> callOnRetrieveComplete(false, null));
 
-                            parseData();
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
-                            callOnRetrieveComplete(false, null);
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                callOnRetrieveComplete(false, null);
-            }
-        });
         requestQueue.addToRequestQueue(mContext, stringRequest);
 
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
+        JsonObjectRequest jsonObjectRequest =
+                new JsonObjectRequest(
+                        Request.Method.GET,
+                        url,
+                        null,
+                        response -> {
+                            setDataParser(response.toString());
 
-                        setDataParser(response.toString());
-
-                        try {
-                            parseData();
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
-                            callOnRetrieveComplete(false, null);
-                        }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        callOnRetrieveComplete(false, null);
-                    }
-                });
+                            try {
+                                parseData();
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                                callOnRetrieveComplete(false, null);
+                            }
+                        },
+                        error -> callOnRetrieveComplete(false, null));
 
         requestQueue.addToRequestQueue(mContext, jsonObjectRequest);
     }

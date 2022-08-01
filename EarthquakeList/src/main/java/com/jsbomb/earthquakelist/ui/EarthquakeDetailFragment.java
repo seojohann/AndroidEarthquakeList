@@ -4,14 +4,16 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.jsbomb.earthquakelist.R;
+import com.jsbomb.earthquakelist.databinding.EarthquakeDetailBinding;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -107,14 +109,17 @@ public class EarthquakeDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.earthquake_detail, container, false);
+        EarthquakeDetailBinding binding = EarthquakeDetailBinding.inflate(inflater, container, false);
+
+        View rootView = binding.getRoot();
+
         if (mEarthquake != null) {
             rootView.setVisibility(View.VISIBLE);
-            TextView timeView = (TextView) rootView.findViewById(R.id.time_view);
-            TextView placeView = (TextView)rootView.findViewById(R.id.place_view);
-            TextView magView = (TextView)rootView.findViewById(R.id.magnitude_view);
-            TextView coordView = (TextView)rootView.findViewById(R.id.coordinates_view);
-            TextView tsunamiView = (TextView)rootView.findViewById(R.id.tsunami_view);
+            TextView timeView = binding.timeView;
+            TextView placeView = binding.placeView;
+            TextView magView = binding.magnitudeView;
+            TextView coordView = binding.coordinatesView;
+            TextView tsunamiView = binding.tsunamiView;
 
             timeView.setText(convertTime(mEarthquake.mTime));
             placeView.setText(mEarthquake.mPlace);

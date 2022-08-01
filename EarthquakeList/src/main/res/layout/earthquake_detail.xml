@@ -1,125 +1,133 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/earthquake_detail"
-    style="?android:attr/textAppearanceLarge"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="16dp"
-    tools:context=".ui.EarthquakeDetailFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/time_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:text="@string/label_time"
-        android:textAppearance="?attr/textAppearanceListItem" />
-
-    <TextView
-        android:id="@+id/time_view"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/earthquake_detail"
+        style="?android:attr/textAppearanceLarge"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_margin="@dimen/text_margin"
-        android:layout_toEndOf="@id/time_label"
-        android:layout_toRightOf="@id/time_label"
-        android:text="@string/format_time"
-        android:textAppearance="?attr/textAppearanceListItem" />
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        tools:context=".ui.EarthquakeDetailFragment">
 
-    <TextView
-        android:id="@+id/place_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/place_view"
-        android:layout_below="@id/time_label"
-        android:layout_margin="@dimen/text_margin"
-        android:text="@string/label_place"
-        android:textAppearance="?attr/textAppearanceListItem" />
+        <TextView
+            android:id="@+id/time_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="@string/label_time"
+            android:textAppearance="?attr/textAppearanceListItem"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/place_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/time_view"
-        android:layout_margin="@dimen/text_margin"
-        android:layout_toEndOf="@id/time_label"
-        android:layout_toRightOf="@id/place_label"
-        android:background="?android:attr/selectableItemBackground"
-        android:drawableRight="?android:attr/actionModeWebSearchDrawable"
-        android:text="@string/quakes_feed_significant_day_url"
-        android:textAppearance="?attr/textAppearanceListItem"
-        android:textColor="@android:color/holo_blue_light" />
+        <TextView
+            android:id="@+id/time_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="@string/format_time"
+            android:textAlignment="viewEnd"
+            android:textAppearance="?attr/textAppearanceListItem"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/time_label"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/magnitude_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/place_view"
-        android:layout_margin="@dimen/text_margin"
-        android:text="@string/label_magnitude"
-        android:textAppearance="?attr/textAppearanceListItem" />
+        <TextView
+            android:id="@+id/place_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/time_label"
+            android:layout_alignBaseline="@+id/place_view"
+            android:layout_margin="@dimen/text_margin"
+            android:text="@string/label_place"
+            android:textAppearance="?attr/textAppearanceListItem"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/time_label" />
 
-    <TextView
-        android:id="@+id/magnitude_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@id/place_view"
-        android:layout_margin="@dimen/text_margin"
-        android:layout_toEndOf="@id/magnitude_label"
-        android:layout_toRightOf="@id/magnitude_label"
-        android:text="@string/format_magnitude"
-        android:textAppearance="?attr/textAppearanceListItem" />
+        <TextView
+            android:id="@+id/place_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:background="?android:attr/selectableItemBackground"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:textColor="@android:color/holo_blue_light"
+            app:drawableEndCompat="?android:attr/actionModeWebSearchDrawable"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/place_label"
+            app:layout_constraintTop_toBottomOf="@id/time_view"
+            tools:text="@string/quakes_feed_significant_day_url" />
 
-    <TextView
-        android:id="@+id/coordinates_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/magnitude_label"
-        android:layout_margin="@dimen/text_margin"
-        android:layout_alignBaseline="@+id/coordinates_view"
-        android:text="@string/label_coordinates"
-        android:textAppearance="?attr/textAppearanceListItem" />
+        <TextView
+            android:id="@+id/magnitude_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="@string/label_magnitude"
+            android:textAppearance="?attr/textAppearanceListItem"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/place_view" />
 
-    <TextView
-        android:id="@+id/coordinates_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@id/magnitude_view"
-        android:layout_margin="@dimen/text_margin"
-        android:layout_toEndOf="@id/coordinates_label"
-        android:layout_toRightOf="@id/coordinates_label"
-        android:autoLink="map"
-        android:background="?android:attr/selectableItemBackground"
-        android:drawableRight="?android:attr/actionModeWebSearchDrawable"
-        android:text="@string/format_coordinates"
-        android:textAppearance="?attr/textAppearanceListItem"
-        android:textColor="@android:color/holo_blue_light" />
+        <TextView
+            android:id="@+id/magnitude_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="@string/format_magnitude"
+            android:textAlignment="viewEnd"
+            android:textAppearance="?attr/textAppearanceListItem"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/magnitude_label"
+            app:layout_constraintTop_toBottomOf="@id/place_view" />
 
-    <TextView
-        android:id="@+id/tsunami_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/coordinates_label"
-        android:layout_margin="@dimen/text_margin"
-        android:text="@string/label_tsunami"
-        android:textAppearance="?attr/textAppearanceListItem" />
+        <TextView
+            android:id="@+id/coordinates_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="@string/label_coordinates"
+            android:textAppearance="?attr/textAppearanceListItem"
+            app:layout_constraintBottom_toBottomOf="@+id/coordinates_view"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/magnitude_label" />
 
-    <TextView
-        android:id="@+id/tsunami_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@id/coordinates_view"
-        android:layout_margin="@dimen/text_margin"
-        android:layout_toEndOf="@id/coordinates_label"
-        android:layout_toRightOf="@id/coordinates_label"
-        android:text="@android:string/ok"
-        android:textAppearance="?attr/textAppearanceListItem" />
+        <TextView
+            android:id="@+id/coordinates_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:autoLink="map"
+            android:background="?android:attr/selectableItemBackground"
+            android:text="@string/format_coordinates"
+            android:textAlignment="viewEnd"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:textColor="@android:color/holo_blue_light"
+            app:drawableEndCompat="?android:attr/actionModeWebSearchDrawable"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/coordinates_label"
+            app:layout_constraintTop_toBottomOf="@id/magnitude_view" />
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/tsunami_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="@string/label_tsunami"
+            android:textAppearance="?attr/textAppearanceListItem"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/coordinates_label" />
+
+        <TextView
+            android:id="@+id/tsunami_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="@android:string/ok"
+            android:textAlignment="viewEnd"
+            android:textAppearance="?attr/textAppearanceListItem"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/coordinates_label"
+            app:layout_constraintTop_toBottomOf="@id/coordinates_view" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
