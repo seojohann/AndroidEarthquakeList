@@ -1,44 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="?android:attr/selectableItemBackground">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:textAppearance="?attr/textAppearanceListItem"
-        android:text="@string/format_time"/>
-
-    <TextView
-        android:id="@+id/magnitude"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:textAppearance="?attr/textAppearanceListItem"
-        android:text="@string/format_magnitude"
-        android:layout_toRightOf="@+id/time"
-        android:layout_toEndOf="@+id/time"/>
-
-    <TextView
-        android:id="@+id/place"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?attr/textAppearanceListItem"
-        android:text="@string/quakes_feed_significant_day_url"
-        android:layout_below="@+id/time"
-        android:layout_alignLeft="@+id/time"
-        android:layout_alignStart="@+id/time" />
+        android:background="?android:attr/selectableItemBackground">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/darker_gray"
-        android:layout_marginTop="@dimen/text_margin"
-        android:layout_marginLeft="@dimen/text_margin"
-        android:layout_marginRight="@dimen/text_margin"
-        android:layout_below="@+id/place"/>
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:textAppearance="?attr/textAppearanceListItem"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/format_time" />
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/magnitude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:textAppearance="?attr/textAppearanceListItem"
+            app:layout_constraintStart_toEndOf="@id/time"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/format_magnitude" />
+
+        <TextView
+            android:id="@+id/place"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:textAppearance="?attr/textAppearanceListItem"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/time"
+            tools:text="@string/quakes_feed_significant_day_url" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="@dimen/text_margin"
+            android:layout_marginTop="@dimen/text_margin"
+            android:layout_marginRight="@dimen/text_margin"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintTop_toBottomOf="@+id/place" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

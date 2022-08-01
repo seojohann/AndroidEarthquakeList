@@ -2,16 +2,15 @@ package com.jsbomb.earthquakelist.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NavUtils;
+
 import com.jsbomb.earthquakelist.R;
+import com.jsbomb.earthquakelist.databinding.ActivityEarthquakeDetailBinding;
 
 /**
  * An activity representing a single Earthquake detail screen. This
@@ -24,8 +23,10 @@ public class EarthquakeDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_earthquake_detail);
-        Toolbar toolbar = (Toolbar)findViewById(R.id.detail_toolbar);
+        ActivityEarthquakeDetailBinding binding =
+                ActivityEarthquakeDetailBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        Toolbar toolbar = binding.detailToolbar;
         setSupportActionBar(toolbar);
 
         // Show the Up button in the action bar.
@@ -55,15 +56,16 @@ public class EarthquakeDetailActivity extends AppCompatActivity {
         }
 
         //my id
-        MobileAds.initialize(this, "ca-app-pub-7438807169301480~2950987624");
+//        MobileAds.initialize(this);
+//        MobileAds.initialize(this, "ca-app-pub-7438807169301480~2950987624");
         //test id
 //        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
 
-        AdView adview = (AdView)findViewById(R.id.adView);
-        AdRequest adRequest;
-        adRequest = new AdRequest.Builder().build();
-//        adRequest = new AdRequest.Builder().addTestDevice("81A442EFD7E2204CA5092B6AD6AE3029").build();
-        adview.loadAd(adRequest);
+//        AdView adview = binding.adView;
+//        AdRequest adRequest;
+//        adRequest = new AdRequest.Builder().build();
+////        adRequest = new AdRequest.Builder().addTestDevice("81A442EFD7E2204CA5092B6AD6AE3029").build();
+//        adview.loadAd(adRequest);
     }
 
     @Override

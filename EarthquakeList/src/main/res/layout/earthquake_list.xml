@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/earthquake_list"
-    android:name="com.jseo.earthquakelist.EarthquakeListFragment"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layoutManager="LinearLayoutManager"
-    tools:context=".ui.EarthquakeListActivity"
-    tools:listitem="@layout/earthquake_list_item" />
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/earthquake_list"
+        android:name="com.jseo.earthquakelist.EarthquakeListFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutManager="LinearLayoutManager"
+        tools:context=".ui.EarthquakeListActivity"
+        tools:listitem="@layout/earthquake_list_item" />
+</layout>
