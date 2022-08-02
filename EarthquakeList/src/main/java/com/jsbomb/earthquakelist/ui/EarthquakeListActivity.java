@@ -201,7 +201,7 @@ public class EarthquakeListActivity extends AppCompatActivity {
         //choose which method to retrieve. httpurlconnection
         DataRetriever dataRetriever = new EarthquakeDataRetriever();
         //or volley, released from google
-        dataRetriever = new EarthquakeDataViaVolleyRetriever(this);
+        dataRetriever = new EarthquakeDataViaVolleyRetriever();
         String urlString = getString(URL_RESOURCES[mMagnitudeFilter.mIndex]);
         try {
             URL url = new URL(urlString);
@@ -219,13 +219,11 @@ public class EarthquakeListActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                if (isSuccess &&
-                                        retrievedData != null &&
-                                        retrievedData instanceof EarthquakesSummary) {
+                                if (isSuccess && retrievedData instanceof EarthquakesSummary) {
                                     EarthquakesSummary earthquakesSummary =
                                             (EarthquakesSummary) retrievedData;
                                     List<EarthquakeData> earthquakeDataList =
-                                            earthquakesSummary.getEarthquakeList();
+                                            earthquakesSummary.getFeatures();
                                     if (earthquakeDataList.isEmpty()) {
                                         displayEmptyList();
                                     } else {
@@ -242,7 +240,7 @@ public class EarthquakeListActivity extends AppCompatActivity {
                 };
         dataRetriever.setOnRetrieveCompleteListener(onRetrieveCompleteListener);
 
-        dataRetriever.retrieve();
+        ((EarthquakeDataViaVolleyRetriever)dataRetriever).retrieve(this);
 
     }
 
@@ -352,6 +350,7 @@ public class EarthquakeListActivity extends AppCompatActivity {
         public void onBindViewHolder(EarthquakeItemViewHolder holder, int position) {
             final EarthquakeData earthquakeData = mData.get(position);
             final EarthquakeData.Properties earthquakeProperties = earthquakeData.getProperties();
+
             long timeLong = earthquakeProperties.getTime();
             holder.mTime.setText(convertTime(timeLong));
             holder.mPlace.setText(earthquakeProperties.getPlace());
