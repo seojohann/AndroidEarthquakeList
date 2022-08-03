@@ -5,7 +5,6 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/earthquake_list"
-        android:name="com.jseo.earthquakelist.EarthquakeListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layoutManager="LinearLayoutManager"

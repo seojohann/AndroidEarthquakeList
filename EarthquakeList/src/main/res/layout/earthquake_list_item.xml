@@ -3,6 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <import type="com.jsbomb.earthquakelist.ui.BindingAdapters" />
+
+        <variable
+            name="context"
+            type="android.content.Context" />
+
+        <variable
+            name="earthquake"
+            type="com.jsbomb.earthquakelist.data.EarthquakeData" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,6 +29,7 @@
             android:textAppearance="?attr/textAppearanceListItem"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:timeInLong="@{earthquake.properties.time}"
             tools:text="@string/format_time" />
 
         <TextView
@@ -23,6 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/text_margin"
+            android:text="@{BindingAdapters.magnitudeString(context, earthquake.properties.mag)}"
             android:textAppearance="?attr/textAppearanceListItem"
             app:layout_constraintStart_toEndOf="@id/time"
             app:layout_constraintTop_toTopOf="parent"
@@ -33,6 +48,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/text_margin"
+            android:text="@{earthquake.properties.place}"
             android:textAppearance="?attr/textAppearanceListItem"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

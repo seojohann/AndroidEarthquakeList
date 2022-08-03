@@ -67,7 +67,7 @@ class GeoJsonDataParser : DataParser() {
 
         //should be in order of minimum longitude, minimum latitude, minimum depth,
         // maximum longitude, maximum latitude, and then maximum depth
-        val bboxObj = Bbox()
+        val bboxObj = EarthquakesSummary.Bbox()
         bboxObj.setMinLongitude(jsonReader.nextDouble())
         bboxObj.setMinLatitude(jsonReader.nextDouble())
         bboxObj.setMinDepth(jsonReader.nextDouble())

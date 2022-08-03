@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/earthquakeListFragment">
+
+    <fragment
+        android:id="@+id/earthquakeListFragment"
+        android:name="com.jsbomb.earthquakelist.ui.EarthquakeListFragment"
+        android:label="EarthquakeListFragment"
+        tools:layout="@layout/fragment_earthquake_list">
+        <action
+            android:id="@+id/action_to_earthquakeDetails"
+            app:destination="@id/earthquakeDetailsFragment" />
+        <action
+            android:id="@+id/action_to_gdaxFragment"
+            app:destination="@id/gdaxFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/earthquakeDetailsFragment"
+        android:name="com.jsbomb.earthquakelist.ui.EarthquakeDetailsFragment"
+        android:label="EarthquakeDetailsFragment"
+        tools:layout="@layout/fragment_earthquake_details">
+        <argument
+            android:name="time"
+            android:defaultValue="0L"
+            app:argType="long" />
+        <argument
+            android:name="place"
+            android:defaultValue="null"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="mag"
+            android:defaultValue="0.0"
+            app:argType="float" />
+        <argument
+            android:name="longitude"
+            android:defaultValue="0.0"
+            app:argType="float" />
+        <argument
+            android:name="latitude"
+            android:defaultValue="0.0"
+            app:argType="float" />
+        <argument
+            android:name="tsunami"
+            android:defaultValue="0"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/gdaxFragment"
+        android:name="com.jsbomb.earthquakelist.ui.GdaxFragment"
+        android:label="GdaxFragment"
+        tools:layout="@layout/fragment_gdax" />
+</navigation>

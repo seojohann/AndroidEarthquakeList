@@ -1,0 +1,205 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.jsbomb.earthquakelist.ui.BindingAdapters" />
+
+        <variable
+            name="context"
+            type="android.content.Context" />
+
+        <variable
+            name="details"
+            type="com.jsbomb.earthquakelist.ui.EarthquakeDetails" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/app_bar_height"
+            android:fitsSystemWindows="true"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/toolbar_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                app:contentScrim="?attr/colorPrimary"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:toolbarId="@+id/toolbar">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/detail_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:layout_collapseMode="pin"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+        <TextView
+            android:id="@+id/time_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="@string/label_time"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/app_bar" />
+
+        <TextView
+            android:id="@+id/time_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:textAlignment="viewEnd"
+            android:textAppearance="?attr/textAppearanceListItem"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/time_label"
+            app:layout_constraintTop_toBottomOf="@+id/app_bar"
+            app:timeInLong="@{details.time}"
+            tools:text="@string/format_time" />
+
+        <TextView
+            android:id="@+id/place_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/time_label"
+            android:layout_alignBaseline="@+id/place_view"
+            android:layout_margin="@dimen/text_margin"
+            android:text="@string/label_place"
+            android:textAppearance="?attr/textAppearanceListItem"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/time_label" />
+
+        <TextView
+            android:id="@+id/place_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@{details.place}"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:textColor="@android:color/holo_blue_light"
+            app:drawableEndCompat="?android:attr/actionModeWebSearchDrawable"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/place_label"
+            app:layout_constraintTop_toBottomOf="@id/time_view"
+            tools:text="@string/quakes_feed_significant_day_url" />
+
+        <TextView
+            android:id="@+id/magnitude_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="@string/label_magnitude"
+            android:textAppearance="?attr/textAppearanceListItem"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/place_view" />
+
+        <TextView
+            android:id="@+id/magnitude_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="@{BindingAdapters.magnitudeString(context, details.mag)}"
+            android:textAlignment="viewEnd"
+            android:textAppearance="?attr/textAppearanceListItem"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/magnitude_label"
+            app:layout_constraintTop_toBottomOf="@id/place_view"
+            tools:text="@string/format_magnitude" />
+
+        <TextView
+            android:id="@+id/coordinates_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="@string/label_coordinates"
+            android:textAppearance="?attr/textAppearanceListItem"
+            app:layout_constraintBottom_toBottomOf="@+id/coordinates_view"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/magnitude_label" />
+
+        <TextView
+            android:id="@+id/coordinates_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:autoLink="map"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@{BindingAdapters.longLatString(context, details.longitude, details.latitude)}"
+            android:textAlignment="viewEnd"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:textColor="@android:color/holo_blue_light"
+            app:drawableEndCompat="?android:attr/actionModeWebSearchDrawable"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/coordinates_label"
+            app:layout_constraintTop_toBottomOf="@id/magnitude_view"
+            tools:text="@string/format_coordinates" />
+
+        <TextView
+            android:id="@+id/tsunami_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="@string/label_tsunami"
+            android:textAppearance="?attr/textAppearanceListItem"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/coordinates_label" />
+
+        <TextView
+            android:id="@+id/tsunami_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="@{BindingAdapters.tsunamiString(context, details.tsunami)}"
+            android:textAlignment="viewEnd"
+            android:textAppearance="?attr/textAppearanceListItem"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/coordinates_label"
+            app:layout_constraintTop_toBottomOf="@id/coordinates_view"
+            tools:text="@android:string/ok" />
+
+
+        <!--        <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"-->
+        <!--            android:id="@+id/adView"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            ads:adSize="BANNER"-->
+        <!--            ads:adUnitId="ca-app-pub-7438807169301480/6210564025"-->
+        <!--            ads:layout_constraintBottom_toBottomOf="parent"-->
+        <!--            ads:layout_constraintEnd_toEndOf="parent"-->
+        <!--            ads:layout_constraintStart_toStartOf="parent" /> &lt;!&ndash; test id : ca-app-pub-3940256099942544/6300978111-->
+        <!--             my id : ca-app-pub-7438807169301480/6210564025&ndash;&gt;-->
+
+        <!--<android.support.design.widget.FloatingActionButton-->
+        <!--android:id="@+id/fab"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center_vertical|start"-->
+        <!--android:layout_margin="@dimen/fab_margin"-->
+        <!--app:layout_anchor="@+id/earthquake_detail_container"-->
+        <!--app:layout_anchorGravity="top|end"-->
+        <!--app:srcCompat="@android:drawable/stat_notify_chat" />-->
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
