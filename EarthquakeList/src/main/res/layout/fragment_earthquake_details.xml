@@ -70,7 +70,7 @@
             android:textAlignment="viewEnd"
             android:textAppearance="?attr/textAppearanceListItem"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/time_label"
+            app:layout_constraintStart_toEndOf="@id/coordinates_label"
             app:layout_constraintTop_toBottomOf="@+id/app_bar"
             app:timeInLong="@{details.time}"
             tools:text="@string/format_time" />
@@ -100,7 +100,7 @@
             android:textColor="@android:color/holo_blue_light"
             app:drawableEndCompat="?android:attr/actionModeWebSearchDrawable"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/place_label"
+            app:layout_constraintStart_toEndOf="@id/coordinates_label"
             app:layout_constraintTop_toBottomOf="@id/time_view"
             tools:text="@string/quakes_feed_significant_day_url" />
 
@@ -123,7 +123,7 @@
             android:textAlignment="viewEnd"
             android:textAppearance="?attr/textAppearanceListItem"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/magnitude_label"
+            app:layout_constraintStart_toEndOf="@id/coordinates_label"
             app:layout_constraintTop_toBottomOf="@id/place_view"
             tools:text="@string/format_magnitude" />
 

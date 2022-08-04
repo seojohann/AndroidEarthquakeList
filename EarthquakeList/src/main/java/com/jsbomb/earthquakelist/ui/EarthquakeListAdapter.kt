@@ -26,6 +26,7 @@ class EarthquakeListAdapter(private val onEarthquakeClickListener: OnEarthquakeC
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(earthquakeItem: EarthquakeData, onEarthquakeClickListener: OnEarthquakeClickListener) {
+            binding.context = binding.root.context
             binding.earthquake = earthquakeItem
             binding.root.setOnClickListener {
                 onEarthquakeClickListener(earthquakeItem)
@@ -52,9 +53,3 @@ class EarthquakeListAdapter(private val onEarthquakeClickListener: OnEarthquakeC
 }
 
 typealias OnEarthquakeClickListener = (EarthquakeData) -> Unit
-
-data class EarthquakeItem(
-    val time: Long,
-    val place: String,
-    val magnitude: Long
-)

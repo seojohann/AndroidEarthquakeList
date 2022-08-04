@@ -63,7 +63,7 @@ class GdaxFragment : Fragment() {
                 }
             }
 
-            loadUrl("https://www.gdax.com/")
+            loadUrl("https://pro.coinbase.com/")
         }
     }
 

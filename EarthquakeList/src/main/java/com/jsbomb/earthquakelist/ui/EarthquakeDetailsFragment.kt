@@ -1,5 +1,7 @@
 package com.jsbomb.earthquakelist.ui
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.jsbomb.earthquakelist.databinding.FragmentEarthquakeDetailsBinding
+
 
 class EarthquakeDetailsFragment : Fragment() {
 
@@ -31,12 +34,19 @@ class EarthquakeDetailsFragment : Fragment() {
         requireArguments().let { arguments ->
             val time = arguments.getLong(ARG_ITEM_TIME)
             val place = arguments.getString(ARG_ITEM_PLACE)
-            val mag = arguments.getDouble(ARG_ITEM_MAG)
-            val longitude = arguments.getDouble(ARG_ITEM_LONGI)
-            val latitude = arguments.getDouble(ARG_ITEM_LATTI)
+            val mag = arguments.getFloat(ARG_ITEM_MAG)
+            val longitude = arguments.getFloat(ARG_ITEM_LONG)
+            val latitude = arguments.getFloat(ARG_ITEM_LAT)
             val tsunami = arguments.getInt(ARG_ITEM_TSUNAMI)
 
-            viewModel.setEarthquakeDetails(time, place, mag, longitude, latitude, tsunami)
+            viewModel.setEarthquakeDetails(
+                time,
+                place,
+                mag.toDouble(),
+                longitude.toDouble(),
+                latitude.toDouble(),
+                tsunami
+            )
         }
 
         viewModel.earthquakeDetails.observe(viewLifecycleOwner) { details ->
@@ -45,8 +55,23 @@ class EarthquakeDetailsFragment : Fragment() {
             }
         }
 
+        viewModel.queryString.observe(viewLifecycleOwner) { uriString ->
+            uriString?.let {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(it)))
+                viewModel.onQueryLocationStart()
+            }
+        }
+
         binding.context = requireContext()
         binding.lifecycleOwner = viewLifecycleOwner
+
+        binding.placeView.setOnClickListener {
+            viewModel.onQueryLocation()
+        }
+
+        binding.coordinatesView.setOnClickListener {
+            viewModel.onQueryLocation()
+        }
     }
 
     companion object {
@@ -54,12 +79,12 @@ class EarthquakeDetailsFragment : Fragment() {
          * The fragment argument representing the item ID that this fragment
          * represents.
          */
-        const val ARG_ITEM_ID = "item_id"
-        const val ARG_ITEM_TIME = "item_time"
-        const val ARG_ITEM_PLACE = "item_place"
-        const val ARG_ITEM_MAG = "item_mag"
-        const val ARG_ITEM_LONGI = "item_longi"
-        const val ARG_ITEM_LATTI = "item_latti"
-        const val ARG_ITEM_TSUNAMI = "item_tsunami"
+        const val ARG_ITEM_ID = "id"
+        const val ARG_ITEM_TIME = "time"
+        const val ARG_ITEM_PLACE = "place"
+        const val ARG_ITEM_MAG = "mag"
+        const val ARG_ITEM_LONG = "longitude"
+        const val ARG_ITEM_LAT = "latitude"
+        const val ARG_ITEM_TSUNAMI = "tsunami"
     }
 }

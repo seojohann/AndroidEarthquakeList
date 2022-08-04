@@ -37,7 +37,7 @@ object BindingAdapters {
     }
 }
 
-private fun Long.formatTime(): String {
+fun Long.formatTime(): String {
     val date = Date(this)
     val simpleDateFormat = SimpleDateFormat.getDateTimeInstance() // "h:mm:ss a"
 

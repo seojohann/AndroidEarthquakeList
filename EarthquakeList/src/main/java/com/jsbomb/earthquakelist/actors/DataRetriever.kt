@@ -1,7 +1,5 @@
 package com.jsbomb.earthquakelist.actors
 
-import kotlinx.coroutines.CoroutineScope
-
 abstract class DataRetriever(
     private var parser: DataParser? = null,
     private var onCompleteListener: OnRetrieveCompleteListener? = null,
