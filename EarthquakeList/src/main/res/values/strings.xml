@@ -13,7 +13,7 @@
     <string name="retry">Retry</string>
 
     <string name="format_time" translatable="false">hh:mm:ss AP</string>
-    <string name="format_magnitude">M%.1f</string>
+    <string name="format_magnitude">M%.2f</string>
     <string name="format_coordinates" translatable="false">%1$.3f, %2$.3f</string>
 
     <string name="label_time">Time:</string>
