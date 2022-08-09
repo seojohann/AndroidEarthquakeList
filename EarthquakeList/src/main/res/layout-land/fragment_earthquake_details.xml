@@ -147,7 +147,7 @@
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
-            android:text="@{BindingAdapters.longLatString(context, details.longitude, details.latitude)}"
+            android:text="@{BindingAdapters.latLongString(context, details.longitude, details.latitude)}"
             android:textAlignment="viewEnd"
             android:textAppearance="?attr/textAppearanceListItem"
             android:textColor="@android:color/holo_blue_light"

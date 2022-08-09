@@ -1,7 +1,8 @@
 package com.jsbomb.earthquakelist.ui
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,14 +50,26 @@ class EarthquakeDetailsFragment : Fragment(), OnMapReadyCallback {
                             .title(it.place)
                     )
 
+                    googleMap.moveCamera(CameraUpdateFactory.zoomTo(4f))
                     googleMap.moveCamera(CameraUpdateFactory.newLatLng(marker))
-                    googleMap.moveCamera(CameraUpdateFactory.zoomTo(9f))
                 }
+            }
+        }
+
+        viewModel.goToWebClicked.observe(viewLifecycleOwner) { url ->
+            url?.let {
+                val webIntent = Intent(Intent.ACTION_VIEW, Uri.parse(it))
+                startActivity(webIntent)
+                viewModel.onPostLinkClicked()
             }
         }
 
         binding.context = requireContext()
         binding.lifecycleOwner = viewLifecycleOwner
+
+        binding.gotoLinkText?.setOnClickListener {
+            onGoToLinkClicked()
+        }
 
         binding.mapView?.getMapAsync(this)
     }
@@ -71,6 +84,7 @@ class EarthquakeDetailsFragment : Fragment(), OnMapReadyCallback {
             val longitude = arguments.getFloat(ARG_ITEM_LONG)
             val latitude = arguments.getFloat(ARG_ITEM_LAT)
             val tsunami = arguments.getInt(ARG_ITEM_TSUNAMI)
+            val url = arguments.getString(ARG_ITEM_URL)
 
             viewModel.setEarthquakeDetails(
                 time,
@@ -78,7 +92,8 @@ class EarthquakeDetailsFragment : Fragment(), OnMapReadyCallback {
                 mag.toDouble(),
                 longitude.toDouble(),
                 latitude.toDouble(),
-                tsunami
+                tsunami,
+                url
             )
         }
     }
@@ -126,6 +141,10 @@ class EarthquakeDetailsFragment : Fragment(), OnMapReadyCallback {
         binding.mapView?.onLowMemory()
     }
 
+    private fun onGoToLinkClicked() {
+        viewModel.onLinkClicked()
+    }
+
     companion object {
         /**
          * The fragment argument representing the item ID that this fragment
@@ -138,5 +157,6 @@ class EarthquakeDetailsFragment : Fragment(), OnMapReadyCallback {
         const val ARG_ITEM_LONG = "longitude"
         const val ARG_ITEM_LAT = "latitude"
         const val ARG_ITEM_TSUNAMI = "tsunami"
+        const val ARG_ITEM_URL = "url"
     }
 }

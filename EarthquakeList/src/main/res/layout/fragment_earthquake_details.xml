@@ -52,7 +52,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/text_margin"
-                android:textAlignment="viewEnd"
+                android:textAlignment="viewStart"
                 android:textAppearance="?attr/textAppearanceListItem"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/coordinates_label"
@@ -101,7 +101,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/text_margin"
                 android:text="@{BindingAdapters.magnitudeString(context, details.mag)}"
-                android:textAlignment="viewEnd"
+                android:textAlignment="viewStart"
                 android:textAppearance="?attr/textAppearanceListItem"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/coordinates_label"
@@ -125,8 +125,8 @@
                 android:layout_margin="@dimen/text_margin"
                 android:autoLink="map"
                 android:background="?android:attr/selectableItemBackground"
-                android:text="@{BindingAdapters.longLatString(context, details.longitude, details.latitude)}"
-                android:textAlignment="viewEnd"
+                android:text="@{BindingAdapters.latLongString(context, details.longitude, details.latitude)}"
+                android:textAlignment="viewStart"
                 android:textAppearance="?attr/textAppearanceListItem"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/coordinates_label"
@@ -149,13 +149,27 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/text_margin"
                 android:text="@{BindingAdapters.tsunamiString(context, details.tsunami)}"
-                android:textAlignment="viewEnd"
+                android:textAlignment="viewStart"
                 android:textAppearance="?attr/textAppearanceListItem"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/coordinates_label"
                 app:layout_constraintTop_toBottomOf="@+id/coordinates_view"
                 tools:text="@android:string/ok" />
 
+            <TextView
+                android:id="@+id/goto_link_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="@string/goto_link"
+                android:textAppearance="?attr/textAppearanceListItem"
+                android:textColor="@color/colorPrimary"
+                app:drawableStartCompat="@drawable/ic_baseline_web_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tsunami_label" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

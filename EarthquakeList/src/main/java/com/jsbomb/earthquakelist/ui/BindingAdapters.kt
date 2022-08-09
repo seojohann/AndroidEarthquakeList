@@ -21,7 +21,7 @@ object BindingAdapters {
     }
 
     @JvmStatic
-    fun longLatString(context: Context, longitude: Double, latitude: Double): String {
+    fun latLongString(context: Context, longitude: Double, latitude: Double): String {
         return context.getString(R.string.format_coordinates, longitude, latitude)
     }
 

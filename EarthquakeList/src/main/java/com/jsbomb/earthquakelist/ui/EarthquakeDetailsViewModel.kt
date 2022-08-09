@@ -11,13 +11,18 @@ class EarthquakeDetailsViewModel : ViewModel() {
     val earthquakeDetails: LiveData<EarthquakeDetails?>
         get() = _earthquakeDetails
 
+    private val _goToWeb = MutableLiveData<String?>(null)
+    val goToWebClicked: LiveData<String?>
+        get() = _goToWeb
+
     fun setEarthquakeDetails(
         time: Long = 0,
         place: String? = null,
         mag: Double = 0.0,
         longitude: Double = 0.0,
         latitude: Double = 0.0,
-        tsunami: Int = 0
+        tsunami: Int = 0,
+        url: String? = null
     ) {
         _earthquakeDetails.postValue(
             EarthquakeDetails(
@@ -26,9 +31,20 @@ class EarthquakeDetailsViewModel : ViewModel() {
                 mag,
                 longitude,
                 latitude,
-                tsunami
+                tsunami,
+                url
             )
         )
+    }
+
+    fun onLinkClicked() {
+        _earthquakeDetails.value?.let {
+            _goToWeb.postValue(it.url)
+        }
+    }
+
+    fun onPostLinkClicked() {
+        _goToWeb.postValue(null)
     }
 }
 
@@ -38,7 +54,8 @@ data class EarthquakeDetails internal constructor(
     var mag: Double = 0.0,
     var longitude: Double = 0.0,
     var latitude: Double = 0.0,
-    var tsunami: Int = 0
+    var tsunami: Int = 0,
+    var url: String? = null
 )
 
 class EarthquakeDetailsViewModelFactory : ViewModelProvider.Factory {

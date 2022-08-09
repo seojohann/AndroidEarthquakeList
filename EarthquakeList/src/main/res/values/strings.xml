@@ -19,7 +19,7 @@
     <string name="label_time">Time:</string>
     <string name="label_place">Place:</string>
     <string name="label_magnitude">Magnitude:</string>
-    <string name="label_coordinates">Longitude &amp; Latitude:</string>
+    <string name="label_coordinates">Latitude &amp; Longitude:</string>
     <string name="label_tsunami">Potential Tsunami:</string>
 
     <string name="yes">Yes</string>
@@ -40,6 +40,8 @@
         <item name="4.5">M4.5+</item>
         <item name="sig">Significant</item>
     </string-array>
+
+    <string name="goto_link">Go to USGS website for more details</string>
 
     <string name="main_menu_menu">Menu</string>
     <string name="main_menu_view_ad">View Ad</string>

@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/J Brothers/AndroidStudioProjects/AndroidEarthquakeList/EarthquakeList/src/main/res/drawable/ic_baseline_web_24.xml" value="0.1" />
         <entry key="..\:/Users/J Brothers/AndroidStudioProjects/AndroidEarthquakeList/EarthquakeList/src/main/res/layout-land/fragment_earthquake_details.xml" value="0.25" />
         <entry key="..\:/Users/J Brothers/AndroidStudioProjects/AndroidEarthquakeList/EarthquakeList/src/main/res/layout-w900dp/earthquake_list.xml" value="0.14519427402862986" />
         <entry key="..\:/Users/J Brothers/AndroidStudioProjects/AndroidEarthquakeList/EarthquakeList/src/main/res/layout/activity_earthquake_detail.xml" value="0.1691995947315096" />
@@ -13,7 +14,7 @@
         <entry key="..\:/Users/J Brothers/AndroidStudioProjects/AndroidEarthquakeList/EarthquakeList/src/main/res/layout/earthquake_list.xml" value="0.17426545086119555" />
         <entry key="..\:/Users/J Brothers/AndroidStudioProjects/AndroidEarthquakeList/EarthquakeList/src/main/res/layout/earthquake_list_content.xml" value="0.17426545086119555" />
         <entry key="..\:/Users/J Brothers/AndroidStudioProjects/AndroidEarthquakeList/EarthquakeList/src/main/res/layout/earthquake_list_item.xml" value="0.25" />
-        <entry key="..\:/Users/J Brothers/AndroidStudioProjects/AndroidEarthquakeList/EarthquakeList/src/main/res/layout/fragment_earthquake_details.xml" value="0.1" />
+        <entry key="..\:/Users/J Brothers/AndroidStudioProjects/AndroidEarthquakeList/EarthquakeList/src/main/res/layout/fragment_earthquake_details.xml" value="0.22" />
         <entry key="..\:/Users/J Brothers/AndroidStudioProjects/AndroidEarthquakeList/EarthquakeList/src/main/res/layout/fragment_earthquake_list.xml" value="0.22" />
         <entry key="..\:/Users/J Brothers/AndroidStudioProjects/AndroidEarthquakeList/EarthquakeList/src/main/res/layout/fragment_gdax.xml" value="0.1" />
         <entry key="..\:/Users/J Brothers/AndroidStudioProjects/AndroidEarthquakeList/EarthquakeList/src/main/res/layout/retrieval_failed.xml" value="0.17426545086119555" />
